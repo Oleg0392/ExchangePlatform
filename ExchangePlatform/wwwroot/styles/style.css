@@ -1,0 +1,118 @@
+﻿h3 {
+    font-family: verdana;
+    font-size: 180%;
+    margin-left: 50px;
+    color: #3F92D2;
+}
+
+.first {
+    font-family: tahoma;
+    font-size: 100%;
+    color: #0c1321;
+    background: #66A3D2;
+    padding-left: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    /*border-bottom-left-radius: 10px;
+	border-bottom-right-radius: 10px;
+	border-top-left-radius: 10px;
+	border-top-right-radius: 10px;*/
+}
+
+#hdiv {
+    padding: 10px;
+    margin-bottom: 25px;
+    margin-top: 25px;
+    margin-right: 20px;
+    margin-left: 20px;
+    background: #062843;
+    border: 4px solid #7B9CB5;
+    border-bottom-right-radius: 20px;
+    border-top-right-radius: 20px;
+}
+
+
+#content {
+    /*margin-left: 350px;
+	position: absolute;
+	top: 230px;
+	left: 70px;
+	width: 1300px;*/
+	margin-right: 30px;
+    font-size: 100%;
+    font-family: tahoma;
+    color: #b1c7f2;
+    margin-left: 60px;
+    
+}
+
+body {
+    background: #2D4150;
+}
+
+.mainmenu {
+    margin-left: 20px;
+    width: 300px;
+    background: #0C1923;
+    color: #69AFE5;
+    font-family: verdana;
+    font-size: 90%;
+    text-align: center;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+}
+
+ul {
+    list-style-type: square;
+    font-family: consolas;
+    color: #69AFE5;
+    font-size: 90%;
+    spacing: 20px;
+    text-align: left;
+}
+
+li {
+    margin-bottom: 1em;
+}
+
+a {
+    color: #69AFE5;
+}
+
+hr {
+    border: 2px solid #69AFE5;
+}
+
+.mmenu {
+    vertical-align: top;
+}
+
+.items {
+    vertical-align: top;
+}
+
+.second {
+    background-color: #aec2eb;
+    font-family: tahoma;
+    font-size: 100%;
+    color: #0c1321;
+    padding-left: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    /*border-bottom-left-radius: 10px;
+	border-bottom-right-radius: 10px;
+	border-top-left-radius: 10px;
+	border-top-right-radius: 10px;*/
+}
+
+.header {
+    background: #2D4150;
+    font-family: tahoma;
+    font-size: 100%;
+    color: #b1c7f2;
+    padding-left: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}

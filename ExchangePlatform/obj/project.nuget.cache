@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "ByGaa96Ww4d1PTTcfntkudkOlvwznaSPMwoH5o6+iIAOz9xCHmKvlZs6RO6ZN9CYpEOOLbePpAEUbYmDukxrbA==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\Oleg\\source\\repos\\ExchangePlatform\\ExchangePlatform\\ExchangePlatform.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Oleg\\.nuget\\packages\\microsoft.visualstudio.azure.containers.tools.targets\\1.15.1\\microsoft.visualstudio.azure.containers.tools.targets.1.15.1.nupkg.sha512"
+  ],
+  "logs": []
+}

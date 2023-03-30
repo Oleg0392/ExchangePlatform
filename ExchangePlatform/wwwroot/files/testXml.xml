@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<export>
+<pallet name="PLT1" volume="25">
+	<address>
+		<country>Japan</country>
+		<city>Tokio</city>
+		<street>Jotaro</street>
+	</address>	
+</pallet>
+<pallet name="PLT2" volume="25">
+	<address>
+		<country>USA</country>
+		<city>NewYork</city>
+		<street>Manhattan</street>
+	</address>	
+</pallet>
+<pallet name="PLT3" volume="25">
+	<address>
+		<country>Russia</country>
+		<city>Magnitigorsk</city>
+		<street>Sovetskaya</street>
+	</address>	
+</pallet>
+<pallet name="PLTL8" volume="15">
+	<address>
+		<country>USA</country>
+		<city>Chicago</city>
+		<street>Christmas</street>
+	</address>	
+</pallet>
+<pallet name="PLTL11" volume="15">
+	<address>
+		<country>China</country>
+		<city>Pekin</city>
+		<street>ChiHuanTau</street>
+	</address>	
+</pallet>
+<pallet name="PLTL12" volume="15">
+	<address>
+		<country>England(UK)</country>
+		<city>London</city>
+		<street>Journals</street>
+	</address>	
+</pallet>
+</export> 

@@ -1,0 +1,40 @@
+﻿<!DOCTYPE html>
+<html>
+	<head>
+		<title>@ViewBag.Title</title>
+		<meta name="viewport" content="width=device-width" />
+		<link href="~/styles/style.css" type="text/css" rel="stylesheet"/>
+	</head>
+	<body>
+		<div id="hdiv" align="center">
+			<h3><b>DOCUMENTS EXCHANGE PLATFORM EXAMPLE</b></h3>
+		</div>
+		<table>
+			<tr>
+				<td class="mmenu">
+					<div class="mainmenu">
+					<br>
+					<b>navigation</b>
+					<br><br>
+					<hr>
+					<ul>
+						<li><a href="/Home/Upload">Upload New Document</a></li>
+						<li><a href="#">Input Documents</a></li>
+						<li><a href="/Home/DownloadTest">Test Download</a></li>
+						<li><a href="Home/GetBytes">Test Bytes</a></li>
+						<li><a href="#">UPD and UKD</a></li>
+						<li><a href="#">Service</a></li>
+						<li><a href="/Home/Index">Home</a></li>
+					</ul>
+					<br>
+					</div>
+				</td>
+				<td class="items">
+					<div id="content">
+						@RenderBody()
+					</div>
+				</td>
+			</tr>
+		</table>
+	</body>
+</htmL>

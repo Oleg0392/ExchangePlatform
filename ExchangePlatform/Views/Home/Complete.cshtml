@@ -1,0 +1,14 @@
+﻿@model ExchangePlatform.Models.DocumentFile
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<p><b>File uploaded successeful!</b></p>
+<p>File name: @Model.fileName</p>
+<form method="get" action="/Home/Upload">
+    <button>Загрузить ещё</button>
+</form>
+<hr />
+<form method="get" action="/Home/Index">
+    <button>Вернуться на главную</button>
+</form>
