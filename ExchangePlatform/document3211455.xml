@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<document>
+	<docHeader>
+		<sender>Concelar Inc.</sender>
+		<buyer>DreamWorks Purchases Company</buyer>
+		<reason>Contract N.4500012</reason>
+	</docHeader>
+	<docLines>
+		<lineItem number="1">
+			<posName></posName>
+			<posArt></posArt>
+			<posCount></posCount>
+			<posPrice></posPrice>
+			<posSum></posSum>
+		</lineItem>
+		<lineItem number="2">
+			<posName></posName>
+			<posArt></posArt>
+			<posCount></posCount>
+			<posPrice></posPrice>
+			<posSum></posSum>
+		</lineItem>
+		<lineItem number="3">
+			<posName></posName>
+			<posArt></posArt>
+			<posCount></posCount>
+			<posPrice></posPrice>
+			<posSum></posSum>
+		</lineItem>
+		<lineItem number="4">
+			<posName></posName>
+			<posArt></posArt>
+			<posCount></posCount>
+			<posPrice></posPrice>
+			<posSum></posSum>
+		</lineItem>
+		<lineItem number="5">
+			<posName></posName>
+			<posArt></posArt>
+			<posCount></posCount>
+			<posPrice></posPrice>
+			<posSum></posSum>
+		</lineItem>
+		<lineItem number="6">
+			<posName></posName>
+			<posArt></posArt>
+			<posCount></posCount>
+			<posPrice></posPrice>
+			<posSum></posSum>
+		</lineItem>
+	</docLines>
+	<docFooter>
+		<summary>
+			<sumCount></sumCount>
+			<sumSum></sumSum>
+		</summary>
+		<reciever>DreamWorks Animation SKG Inc.</reciever>
+		<application></application>
+	</docFooter>
+</document>

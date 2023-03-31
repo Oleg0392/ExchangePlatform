@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<document>
+	<docHeader>
+		<sender></sender>
+		<buyer></buyer>
+		<reason></reason>
+	</docHeader>
+	<docLines>
+		<lineItem number="">
+			<posName></posName>
+			<posArt></posArt>
+			<posCount></posCount>
+			<posPrice></posPrice>
+			<posSum></posSum>
+		</lineItem>
+		<lineItem number="">
+			<posName></posName>
+			<posArt></posArt>
+			<posCount></posCount>
+			<posPrice></posPrice>
+			<posSum></posSum>
+		</lineItem>
+	</docLines>
+	<docFooter>
+		<summary>
+			<sumCount></sumCount>
+			<sumSum></sumSum>
+		</summary>
+		<reciever></reciever>
+		<application></application>
+	</docFooter>
+</document>

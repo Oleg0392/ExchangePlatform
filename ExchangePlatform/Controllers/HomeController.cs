@@ -27,7 +27,7 @@ namespace ExchangePlatform.Controllers
         {
             if (document != null)
             {
-                string newPath = Path.Combine(Directory.GetCurrentDirectory(), document.FileName);
+                string newPath = Path.Combine(Directory.GetCurrentDirectory(), @"\wwwroot\files\" + document.FileName);
                 using(var stream = new FileStream(newPath,FileMode.Create))
                 {
                     document.CopyTo(stream);
@@ -44,7 +44,7 @@ namespace ExchangePlatform.Controllers
             string f_path = Path.Combine(Directory.GetCurrentDirectory(), @"wwwroot\files\testXml.xml");
             byte[] fileRaw = System.IO.File.ReadAllBytes(f_path);
             string f_type = "application/xml";
-            string f_name = "testXml.xml";  // [необязательный]
+            string f_name = "testXml.xml";         // [необязательный]
             return File(fileRaw, f_type, f_name);
         }
     }
