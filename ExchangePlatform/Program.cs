@@ -13,6 +13,11 @@ namespace ExchangePlatform
     {
         public static void Main(string[] args)
         {
+            /*IHost host = CreateHostBuilder(args).Build();
+            var provider = host.Services.GetService(typeof(ConfigurationProvider));
+            if (provider is IConfigurationProvider) QueryManager.ConfigurationProvider = (IConfigurationProvider)provider;
+            host.Run();*/
+            
             CreateHostBuilder(args).Build().Run();
         }
 

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<document>
+	<docHeader>
+		<docNumber>D0002679</docNumber>
+		<sender>Concelar Inc.</sender>
+		<buyer>DreamWorks Purchases Company</buyer>
+		<reason>Contract N.4500012</reason>
+		<docDate>01.04.2023</docDate>
+	</docHeader>
+	<docLines>
+		<lineItem number="1">
+			<posName>Paints 24 Colors</posName>
+			<posArt>2323432423</posArt>
+			<posCount>38</posCount>
+			<posPrice>250.00</posPrice>
+			<posSum>9500.00</posSum>
+		</lineItem>
+		<lineItem number="2">
+			<posName>Canvas 350x500 24pcs</posName>
+			<posArt>234324324</posArt>
+			<posCount>5</posCount>
+			<posPrice>685.00</posPrice>
+			<posSum>3425.00</posSum>
+		</lineItem>
+		<lineItem number="3">
+			<posName>Paper A4 300pcs.</posName>
+			<posArt>5645756753</posArt>
+			<posCount>10</posCount>
+			<posPrice>278.00</posPrice>
+			<posSum>2780.00</posSum>
+		</lineItem>
+		<lineItem number="4">
+			<posName>Stickers with glue 30x40 50pcs.</posName>
+			<posArt>675464534</posArt>
+			<posCount>20</posCount>
+			<posPrice>154.00</posPrice>
+			<posSum>3080.00</posSum>
+		</lineItem>
+		<lineItem number="5">
+			<posName>Pencils Color 7 pcs.</posName>
+			<posArt>90809877</posArt>
+			<posCount>24</posCount>
+			<posPrice>186.00</posPrice>
+			<posSum>4464.00</posSum>
+		</lineItem>
+		<lineItem number="6">
+			<posName>Notebook mini black</posName>
+			<posArt>6823298</posArt>
+			<posCount>40</posCount>
+			<posPrice>45.00</posPrice>
+			<posSum>1800.00</posSum>
+		</lineItem>
+	</docLines>
+	<docFooter>
+		<summary>
+			<sumCount>137</sumCount>
+			<sumSum>25049.00</sumSum>
+		</summary>
+		<reciever>DreamWorks Animation SKG Inc.</reciever>
+		<application></application>
+	</docFooter>
+</document>

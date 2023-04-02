@@ -17,6 +17,8 @@ namespace ExchangePlatform
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
+            
+            services.AddScoped<DataProviders.Intrefaces.IQueryManager, DataProviders.Implenetation.QueryManager>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -26,7 +28,7 @@ namespace ExchangePlatform
             {
                 app.UseDeveloperExceptionPage();
             }
-
+            
             app.UseStaticFiles();
             app.UseRouting();
 
@@ -34,6 +36,8 @@ namespace ExchangePlatform
             {
                 endpoint.MapControllerRoute(name: "default", pattern: "{controller=Home}/{action=Index}/{id?}");
             });
+
+            
 
             /*app.UseEndpoints(endpoints =>
             {

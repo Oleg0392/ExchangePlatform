@@ -4,11 +4,18 @@ using Microsoft.AspNetCore.Http;
 using System.Web;
 using System.IO;
 using ExchangePlatform.Models;
+using ExchangePlatform.DataProviders.Intrefaces;
 
 namespace ExchangePlatform.Controllers
 {
     public class HomeController : Controller
     {
+        IQueryManager queryManager { get; set; }
+
+        public HomeController(IQueryManager manager)
+        {
+            queryManager = manager;
+        }
         public IActionResult Index()
         {
             ViewBag.Title = "Home Page";
@@ -27,12 +34,16 @@ namespace ExchangePlatform.Controllers
         {
             if (document != null)
             {
-                string newPath = Path.Combine(Directory.GetCurrentDirectory(), @"\wwwroot\files\" + document.FileName);
+                string newPath = Path.Combine(@"C:\Users\Oleg\source\repos\ExchangePlatform\ExchangePlatform\wwwroot\files\", document.FileName);
                 using(var stream = new FileStream(newPath,FileMode.Create))
                 {
                     document.CopyTo(stream);
                 }
-                ViewBag.Title = "Upload complete.";
+                int RowsAffected = 0;
+                string queryString = "INSERT INTO Orders(DocNumber,DocDate,Buyer,Reciever,Sender,Reason,DocAllSum,DocAllCount) " +
+                    "VALUES ('00001','20230329','test','test','test','test',123.00,5)";
+                RowsAffected = queryManager.ExecuteNonQuery(queryString);
+                ViewBag.Title = "Upload complete. " + RowsAffected.ToString() + " rows affected.";
                 return View("Complete", new DocumentFile() { fileName = document.FileName });
             }
             ViewBag.Title = "Upload failed.";
