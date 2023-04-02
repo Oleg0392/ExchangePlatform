@@ -11,7 +11,6 @@ namespace ExchangePlatform.DataProviders.Implenetation
 {
     public class QueryManager : IQueryManager
     {
-        //public static IConfigurationProvider ConfigurationProvider { get; set; }
         IConfiguration configuration { get; set; }
         public QueryManager(IConfiguration config)
         {
@@ -30,6 +29,11 @@ namespace ExchangePlatform.DataProviders.Implenetation
             }
             sqlConnection.Close();
             return queryResult;
+        }
+
+        public void ExecuteQuery(string queryString, string[] queryParams)
+        {
+
         }
     }
 }

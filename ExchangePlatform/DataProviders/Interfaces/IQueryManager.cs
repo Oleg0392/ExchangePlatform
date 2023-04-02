@@ -7,6 +7,8 @@ namespace ExchangePlatform.DataProviders.Intrefaces
 {
     public interface IQueryManager
     {
-        int ExecuteNonQuery(string queryString, string[] queryParams = null);
+        public int ExecuteNonQuery(string queryString, string[] queryParams = null);
+
+        public void ExecuteQuery(string queryString, string[] queryParams = null);
     }
 }

@@ -42,6 +42,7 @@ namespace ExchangePlatform.Controllers
                 int RowsAffected = 0;
                 string queryString = "INSERT INTO Orders(DocNumber,DocDate,Buyer,Reciever,Sender,Reason,DocAllSum,DocAllCount) " +
                     "VALUES ('00001','20230329','test','test','test','test',123.00,5)";
+                //OrderModel orderModel = new OrderModel(newPath);
                 RowsAffected = queryManager.ExecuteNonQuery(queryString);
                 ViewBag.Title = "Upload complete. " + RowsAffected.ToString() + " rows affected.";
                 return View("Complete", new DocumentFile() { fileName = document.FileName });
