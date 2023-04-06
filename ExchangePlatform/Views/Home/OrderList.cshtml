@@ -1,0 +1,19 @@
+﻿@model List<ExchangePlatform.Models.OrderModel>
+@{
+	Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@for(int i = 1; i < @Model.Count + 1; i++)
+{
+	if ((i % 2) == 0)
+	{
+		<div calss="second">
+			@Model[i].DocNumber | @Model[i].DocDate | @Model[i].Sender | @Model[i].Reciever | @Model[i].DocSum
+		</div>
+	}
+	else
+	{
+		<div class="first">
+			@Model[i].DocNumber | @Model[i].DocDate | @Model[i].Sender | @Model[i].Reciever | @Model[i].DocSum
+		</div>
+	}
+}
