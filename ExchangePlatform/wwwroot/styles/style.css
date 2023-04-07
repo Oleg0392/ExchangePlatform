@@ -5,14 +5,78 @@
     color: #3F92D2;
 }
 
+.orderhead {
+    font-family: tahoma;
+    font-size: 100%;
+    color: #b1c7f2;
+    padding-left: 30px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+	width: 900px;
+    /*border-bottom-left-radius: 10px;
+	border-bottom-right-radius: 10px;
+	border-top-left-radius: 10px;
+	border-top-right-radius: 10px;*/
+}
+
 .first {
     font-family: tahoma;
     font-size: 100%;
     color: #0c1321;
     background: #66A3D2;
-    padding-left: 10px;
+    padding-left: 30px;
     padding-top: 10px;
     padding-bottom: 10px;
+	width: 900px;
+	border: 1px solid;
+    /*border-bottom-left-radius: 10px;
+	border-bottom-right-radius: 10px;
+	border-top-left-radius: 10px;
+	border-top-right-radius: 10px;*/
+}
+
+.second {
+    background-color: #aec2eb;
+    font-family: tahoma;
+    font-size: 100%;
+    color: #0c1321;
+    padding-left: 30px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+	width: 900px;
+	border: 1px solid;
+    /*border-bottom-left-radius: 10px;
+	border-bottom-right-radius: 10px;
+	border-top-left-radius: 10px;
+	border-top-right-radius: 10px;*/
+}
+
+.positions {
+    background-color: #E0FFFF;
+    font-family: tahoma;
+    font-size: 100%;
+    color: #0c1321;
+    padding-left: 30px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+	width: 900px;
+	border: 1px solid;
+    /*border-bottom-left-radius: 10px;
+	border-bottom-right-radius: 10px;
+	border-top-left-radius: 10px;
+	border-top-right-radius: 10px;*/
+}
+
+.positionhead {
+    background-color: #AFEEEE;
+    font-family: tahoma;
+    font-size: 100%;
+    color: #0c1321;
+    padding-left: 30px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+	width: 900px;
+	border: 1px solid;
     /*border-bottom-left-radius: 10px;
 	border-bottom-right-radius: 10px;
 	border-top-left-radius: 10px;
@@ -91,20 +155,6 @@ hr {
 
 .items {
     vertical-align: top;
-}
-
-.second {
-    background-color: #aec2eb;
-    font-family: tahoma;
-    font-size: 100%;
-    color: #0c1321;
-    padding-left: 10px;
-    padding-top: 10px;
-    padding-bottom: 10px;
-    /*border-bottom-left-radius: 10px;
-	border-bottom-right-radius: 10px;
-	border-top-left-radius: 10px;
-	border-top-right-radius: 10px;*/
 }
 
 .header {

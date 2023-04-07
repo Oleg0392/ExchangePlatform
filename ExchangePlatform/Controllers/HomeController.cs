@@ -1,12 +1,12 @@
 ﻿using System;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
-using Microsoft.Data.SqlClient;
 using System.Web;
 using System.IO;
 using System.Collections.Generic;
 using ExchangePlatform.Models;
 using ExchangePlatform.DataProviders.Intrefaces;
+using ExchangePlatform.Models.Implemenation;
 
 namespace ExchangePlatform.Controllers
 {
@@ -42,22 +42,26 @@ namespace ExchangePlatform.Controllers
                     document.CopyTo(stream);
                 }
                 OrderModel model = new OrderModel(newPath);
+
+                // вставка заголовок заказа в БД
                 int RowsAffected = queryManager.ExecuteNonQuery(model.GetInsertCommand());
+
+                // взятие DocId заказа из БД
+                queryManager.ExecuteQuery(model.GetSelectDocId());
+                int orderId = Convert.ToInt32(queryManager.GetResultObject());
+
+                // вставка позиций заказа в БД с взятым DocId для связки с заказом
+                foreach (var item in model.Items)
+                {
+                    queryManager.ExecuteNonQuery(item.GetInsertCommand(orderId));
+                }              
+
                 ViewBag.Title = "Upload complete. " + RowsAffected.ToString() + " rows affected.";
                 return View("Complete", new DocumentFile() { fileName = document.FileName });
             }
             ViewBag.Title = "Upload failed.";
             return View();
         }
-
-        /*public FileResult DownloadTest()
-        {
-            string f_path = Path.Combine(Directory.GetCurrentDirectory(), @"wwwroot\files\testXml.xml");
-            byte[] fileRaw = System.IO.File.ReadAllBytes(f_path);
-            string f_type = "application/xml";
-            string f_name = "testXml.xml";         // [необязательный]
-            return File(fileRaw, f_type, f_name);
-        }*/
 
         public IActionResult OrderList()
         {
@@ -78,12 +82,17 @@ namespace ExchangePlatform.Controllers
         }
 
         [HttpGet]
-        public IActionResult EditOrder(string id)
+        public IActionResult EditOrder(int id)
         {
             ViewBag.Title = "Edit Order Page";
-            OrderModel model = new OrderModel();
+
+            OrderModel model = new ();
             queryManager.ExecuteQuery(model.GetSelectCommand(id));
             model.LoadOrderModel(queryManager.GetResultObjectArray1D());
+
+            queryManager.ExecuteQuery(ItemModel.GetSelectAllCommand(model.DocId));
+            model.LoadItems(queryManager.GetResultObjectArray2D());
+
             return View(model);
         }
 
@@ -104,5 +113,14 @@ namespace ExchangePlatform.Controllers
             }
             return View("OrderList");
         }
+
+        /*public FileResult DownloadTest()
+        {
+            string f_path = Path.Combine(Directory.GetCurrentDirectory(), @"wwwroot\files\testXml.xml");
+            byte[] fileRaw = System.IO.File.ReadAllBytes(f_path);
+            string f_type = "application/xml";
+            string f_name = "testXml.xml";         // [необязательный]
+            return File(fileRaw, f_type, f_name);
+        }*/
     }
 }

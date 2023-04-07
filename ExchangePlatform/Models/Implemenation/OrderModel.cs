@@ -2,14 +2,14 @@
 using System.Data;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Xml;
 using System.IO;
 using Microsoft.Data.SqlClient;
+using ExchangePlatform.Models.Interfaces;
 
-namespace ExchangePlatform.Models
+namespace ExchangePlatform.Models.Implemenation
 {
-    public class OrderModel
+    public class OrderModel : IQueryModel
     {
         public string DocNumber { get; set; }
         public DateTime DocDate { get; set; }
@@ -21,7 +21,7 @@ namespace ExchangePlatform.Models
         public int DocCount { get; set; }
         public int DocId { get; set; }
 
-        // метаданные для модели
+        // метаданные модели
         protected static Dictionary<string, DbType> ModelInfo = new Dictionary<string, DbType>()
         {
             { "DocNumber",DbType.String },
@@ -35,6 +35,8 @@ namespace ExchangePlatform.Models
             { "DocId", DbType.Int32 }
         };
 
+        public List<ItemModel> Items { get; set; }
+
 
         public OrderModel(string fileFullPath)
         {
@@ -42,7 +44,7 @@ namespace ExchangePlatform.Models
             {
 
                 XmlDocument document = new XmlDocument();
-                document.LoadXml(fileFullPath);
+                document.Load(fileFullPath);
                 DocNumber = document.SelectSingleNode("/document/docHeader/docNumber").InnerText;
                 DocDate = DateTime.ParseExact(document.SelectSingleNode("/document/docHeader/docDate").InnerText, "dd.MM.yyyy", null);
                 Sender = document.SelectSingleNode("/document/docHeader/sender").InnerText;
@@ -51,6 +53,12 @@ namespace ExchangePlatform.Models
                 Reciever = document.SelectSingleNode("/document/docFooter/reciever").InnerText;
                 DocSum = Convert.ToDecimal(document.SelectSingleNode("/document/docFooter/summary/sumSum").InnerText);
                 DocCount = Convert.ToInt32(document.SelectSingleNode("/document/docFooter/summary/sumCount").InnerText);
+                XmlNodeList itemNodeList = document.SelectNodes("document/docLines/lineItem");
+                foreach (XmlNode itemNode in itemNodeList)
+                {
+                    Items.Add(new ItemModel(itemNode));
+                }
+
             }
             else
             {
@@ -76,52 +84,62 @@ namespace ExchangePlatform.Models
 
         }
 
-        public SqlCommand GetInsertCommand()
+        public SqlCommand GetInsertCommand(int Id = 0)
         {
             string query = "INSERT INTO Orders(DocNumber, DocDate, Buyer, Reciever, Sender, Reason, DocAllSum, DocAllCount) ";
             query += "VALUES (@DocNum, @DocDate, @Buyer, @Reciever, @Sender, @Reason, @DocSum, @DocCount)";
             SqlCommand command = new SqlCommand(query);
 
             command.Parameters.Add(new SqlParameter() { ParameterName = "@DocNum", DbType = ModelInfo["DocNumber"], Value = DocNumber });
-            command.Parameters.Add(new SqlParameter() { ParameterName = "@DocDate", DbType = ModelInfo["DocDate"] , Value = DocDate });
-            command.Parameters.Add(new SqlParameter() { ParameterName = "@Buyer", DbType = ModelInfo["Buyer"] , Value = Buyer });
+            command.Parameters.Add(new SqlParameter() { ParameterName = "@DocDate", DbType = ModelInfo["DocDate"], Value = DocDate });
+            command.Parameters.Add(new SqlParameter() { ParameterName = "@Buyer", DbType = ModelInfo["Buyer"], Value = Buyer });
             command.Parameters.Add(new SqlParameter() { ParameterName = "@Reciever", DbType = ModelInfo["Reciever"], Value = Reciever });
             command.Parameters.Add(new SqlParameter() { ParameterName = "@Sender", DbType = ModelInfo["Sender"], Value = Sender });
             command.Parameters.Add(new SqlParameter() { ParameterName = "@Reason", DbType = ModelInfo["Reason"], Value = Reason });
             command.Parameters.Add(new SqlParameter() { ParameterName = "@DocSum", DbType = ModelInfo["DocSum"], Value = DocSum });
             command.Parameters.Add(new SqlParameter() { ParameterName = "@DocCount", DbType = ModelInfo["DocCount"], Value = DocCount });
-                       
+
             return command;
         }
 
-        public SqlCommand GetSelectCommand(string docNumber)
-        {
-            string query = "SELECT DocNumber, DocDate, Buyer, Reciever, Sender, Reason, DocAllSum, DocAllCount, DocId ";
-            query += "FROM Orders WHERE DocNumber = @DocNum";
-
-            SqlCommand command = new SqlCommand(query);
-            command.Parameters.Add(new SqlParameter()
-            { 
-                ParameterName = "@DocNum",
-                DbType = ModelInfo["DocNumber"],
-                Value = docNumber
-            });
-            return command;
-        }
-
-        public SqlCommand GetSelectCommand(int docId)
+        public SqlCommand GetSelectCommand(int docId = 0)
         {
             string query = "SELECT DocNumber, DocDate, Buyer, Reciever, Sender, Reason, DocAllSum, DocAllCount, DocId ";
             query += "FROM Orders WHERE DocId = @DocId";
 
             SqlCommand command = new SqlCommand(query);
             command.Parameters.Add(new SqlParameter()
-            { 
+            {
                 ParameterName = "@DocId",
                 DbType = ModelInfo["DocId"],
                 Value = docId
             });
             return command;
+        }
+
+        public SqlCommand GetUpdateCommand(int ModelInfoIndex, object NewValue)
+        {
+            string query = "UPDATE Orders SET " + ModelInfo.ElementAt(ModelInfoIndex).Key + " = @NewValue \n";
+            query += "WHERE DocId = @DocId";
+            SqlCommand command = new SqlCommand(query);
+            command.Parameters.Add(new SqlParameter()
+            {
+                ParameterName = "@NewValue",
+                DbType = ModelInfo.ElementAt(ModelInfoIndex).Value,
+                Value = NewValue
+            });
+            command.Parameters.Add(new SqlParameter()
+            {
+                ParameterName = "@DocId",
+                DbType = ModelInfo["DocId"],
+                Value = DocId
+            });
+            return command;
+        }
+
+        public SqlCommand GetDeleteCommand(int Id = 0)
+        {
+            return null;
         }
 
         public static SqlCommand GetSelectAllCommand()
@@ -159,26 +177,6 @@ namespace ExchangePlatform.Models
             return equals;
         }
 
-        public SqlCommand GetUpdateCommand(int ModelInfoIndex, object NewValue)
-        {
-            string query = "UPDATE Orders SET " + ModelInfo.ElementAt(ModelInfoIndex).Key + " = @NewValue \n";
-            query += "WHERE DocId = @DocId";
-            SqlCommand command = new SqlCommand(query);
-            command.Parameters.Add(new SqlParameter()
-            {
-                ParameterName = "@NewValue",
-                DbType = ModelInfo.ElementAt(ModelInfoIndex).Value,
-                Value = NewValue
-            });
-            command.Parameters.Add(new SqlParameter()
-            {
-                ParameterName = "@DocId",
-                DbType = ModelInfo["DocId"],
-                Value = DocId
-            });
-            return command;
-        }
-
         public object[] ToArray()
         {
             object[] array = new object[9];
@@ -192,6 +190,26 @@ namespace ExchangePlatform.Models
             array[7] = DocCount;
             array[8] = DocId;
             return array;
+        }
+
+        public SqlCommand GetSelectDocId()
+        {
+            SqlCommand command = new SqlCommand("SELECT DocId FROM Orders WHERE DocId = @DocId");
+            command.Parameters.Add(new SqlParameter() { ParameterName = "@DocId", DbType = ModelInfo["DocId"], Value = DocId });
+            return command;
+        }
+
+        public void LoadItems(object[,] QueryResults)
+        {
+            for (int i = 0; i < QueryResults.GetLength(0); i++)
+            {
+                object[] temp = new object[QueryResults.GetLength(1)];
+                for (int j = 0; j < temp.Length; j++)
+                {
+                    temp[j] = QueryResults[i,j];
+                }
+                Items.Add(new ItemModel(temp));
+            }
         }
     }
 }
