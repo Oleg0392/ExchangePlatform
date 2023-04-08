@@ -1,0 +1,23 @@
+﻿@model List<ExchangePlatform.Models.Implemenation.OrderModel>
+@{
+	Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@for(int i = 1; i < @Model.Count + 1; i++)
+{
+	if ((i % 2) == 0)
+	{
+		<a href="/Home/EditOrder/@Model[i].DocId">
+			<div class="second">
+				@Model[i].DocNumber | @Model[i].DocDate | @Model[i].Sender | @Model[i].Reciever | @Model[i].DocSum
+			</div>
+		</a>
+	}
+	else
+	{
+		<a href="/Home/EditOrder/@Model[i].DocId">
+			<div class="first">
+				@Model[i].DocNumber | @Model[i].DocDate | @Model[i].Sender | @Model[i].Reciever | @Model[i].DocSum
+			</div>
+		</a>
+	}
+}
