@@ -24,15 +24,15 @@ namespace ExchangePlatform.Models.Implemenation
         // метаданные модели
         protected static Dictionary<string, DbType> ModelInfo = new Dictionary<string, DbType>()
         {
-            { "DocNumber",DbType.String },
-            { "DocDate", DbType.DateTime },
-            { "Sender", DbType.String },
-            { "Buyer", DbType.String },
-            { "Reason", DbType.String },
-            { "Reciever", DbType.String },
-            { "DocSum", DbType.Decimal },
-            { "DocCuont", DbType.Int32 },
-            { "DocId", DbType.Int32 }
+            { "DocNumber",DbType.String },    //0
+            { "DocDate", DbType.DateTime },   //1
+            { "Sender", DbType.String },      //2
+            { "Buyer", DbType.String },       //3
+            { "Reason", DbType.String },      //4
+            { "Reciever", DbType.String },    //5
+            { "DocAllSum", DbType.Decimal },     //6
+            { "DocAllCount", DbType.Int32 },     //7
+            { "DocId", DbType.Int32 }         //8
         };
 
         public List<ItemModel> Items { get; set; }
@@ -40,7 +40,7 @@ namespace ExchangePlatform.Models.Implemenation
 
         public OrderModel(string fileFullPath)
         {
-            if (Directory.Exists(fileFullPath))
+            if (File.Exists(fileFullPath))
             {
 
                 XmlDocument document = new XmlDocument();
@@ -53,12 +53,20 @@ namespace ExchangePlatform.Models.Implemenation
                 Reciever = document.SelectSingleNode("/document/docFooter/reciever").InnerText;
                 DocSum = Convert.ToDecimal(document.SelectSingleNode("/document/docFooter/summary/sumSum").InnerText);
                 DocCount = Convert.ToInt32(document.SelectSingleNode("/document/docFooter/summary/sumCount").InnerText);
-                XmlNodeList itemNodeList = document.SelectNodes("document/docLines/lineItem");
+
+                XmlNodeList itemNodeList = document.SelectNodes("/document/docLines/lineItem");
+                Items = new List<ItemModel>();
                 foreach (XmlNode itemNode in itemNodeList)
                 {
-                    Items.Add(new ItemModel(itemNode));
+                    Items.Add(new ItemModel()
+                    {
+                        Name = itemNode.SelectSingleNode("posName").InnerText,
+                        Art = itemNode.SelectSingleNode("posArt").InnerText,
+                        Count = Convert.ToInt32(itemNode.SelectSingleNode("posCount").InnerText),
+                        Price = Convert.ToDecimal(itemNode.SelectSingleNode("posPrice").InnerText),
+                        Sum = Convert.ToDecimal(itemNode.SelectSingleNode("posSum").InnerText)
+                    });
                 }
-
             }
             else
             {
@@ -96,8 +104,8 @@ namespace ExchangePlatform.Models.Implemenation
             command.Parameters.Add(new SqlParameter() { ParameterName = "@Reciever", DbType = ModelInfo["Reciever"], Value = Reciever });
             command.Parameters.Add(new SqlParameter() { ParameterName = "@Sender", DbType = ModelInfo["Sender"], Value = Sender });
             command.Parameters.Add(new SqlParameter() { ParameterName = "@Reason", DbType = ModelInfo["Reason"], Value = Reason });
-            command.Parameters.Add(new SqlParameter() { ParameterName = "@DocSum", DbType = ModelInfo["DocSum"], Value = DocSum });
-            command.Parameters.Add(new SqlParameter() { ParameterName = "@DocCount", DbType = ModelInfo["DocCount"], Value = DocCount });
+            command.Parameters.Add(new SqlParameter() { ParameterName = "@DocSum", DbType = ModelInfo["DocAllSum"], Value = DocSum });
+            command.Parameters.Add(new SqlParameter() { ParameterName = "@DocCount", DbType = ModelInfo["DocAllCount"], Value = DocCount });
 
             return command;
         }
@@ -139,7 +147,16 @@ namespace ExchangePlatform.Models.Implemenation
 
         public SqlCommand GetDeleteCommand(int Id = 0)
         {
-            return null;
+            string query = "DELETE FROM Orders WHERE DocId = @DocId";
+            SqlCommand command = new SqlCommand(query);
+            command.Parameters.Add(new SqlParameter()
+            {
+                ParameterName = "@DocId",
+                DbType = ModelInfo["DocId"],
+                Value = Id
+            });
+
+            return command;
         }
 
         public static SqlCommand GetSelectAllCommand()
@@ -152,10 +169,10 @@ namespace ExchangePlatform.Models.Implemenation
         {
             DocNumber = QueryResult[0].ToString();
             DocDate = Convert.ToDateTime(QueryResult[1]);
-            Sender = QueryResult[2].ToString();
-            Buyer = QueryResult[3].ToString();
-            Reason = QueryResult[4].ToString();
-            Reciever = QueryResult[5].ToString();
+            Buyer = QueryResult[2].ToString();
+            Reciever = QueryResult[3].ToString();
+            Sender = QueryResult[4].ToString();
+            Reason = QueryResult[5].ToString();
             DocSum = Convert.ToDecimal(QueryResult[6].ToString());
             DocCount = Convert.ToInt32(QueryResult[7].ToString());
             DocId = Convert.ToInt32(QueryResult[8].ToString());
@@ -192,15 +209,17 @@ namespace ExchangePlatform.Models.Implemenation
             return array;
         }
 
-        public SqlCommand GetSelectDocId()
+        public SqlCommand GetDocIdByDocNumber()
         {
-            SqlCommand command = new SqlCommand("SELECT DocId FROM Orders WHERE DocId = @DocId");
-            command.Parameters.Add(new SqlParameter() { ParameterName = "@DocId", DbType = ModelInfo["DocId"], Value = DocId });
+            SqlCommand command = new SqlCommand("SELECT DocId FROM Orders WHERE DocNumber = @DocNumber");
+            command.Parameters.Add(new SqlParameter() { ParameterName = "@DocNumber", DbType = ModelInfo["DocNumber"], Value = DocNumber });
             return command;
         }
 
         public void LoadItems(object[,] QueryResults)
         {
+            Items = new List<ItemModel>();
+            if (QueryResults == null) return;
             for (int i = 0; i < QueryResults.GetLength(0); i++)
             {
                 object[] temp = new object[QueryResults.GetLength(1)];
@@ -208,8 +227,78 @@ namespace ExchangePlatform.Models.Implemenation
                 {
                     temp[j] = QueryResults[i,j];
                 }
-                Items.Add(new ItemModel(temp));
+                Items.Add(new ItemModel());
+                Items[i].LoadItemModel(temp);
             }
+        }
+
+        public void ToXmlDocument(string filePath)
+        {
+            XmlDocument xmlDocument = new XmlDocument();
+            XmlDeclaration xmlDeclaration = xmlDocument.CreateXmlDeclaration("1.0", "utf-8", null);
+            xmlDocument.AppendChild(xmlDeclaration);
+            XmlElement document = xmlDocument.CreateElement("document");
+            xmlDocument.AppendChild(document);
+            XmlElement docHeader = xmlDocument.CreateElement("docHeader");
+            XmlElement docLines = xmlDocument.CreateElement("docLines");
+            XmlElement docFooter = xmlDocument.CreateElement("docFooter");
+            document.AppendChild(docHeader);
+            document.AppendChild(docLines);
+            document.AppendChild(docFooter);
+            XmlElement docNumber = xmlDocument.CreateElement("docNumber");           
+            XmlElement sender = xmlDocument.CreateElement("sender");
+            XmlElement buyer = xmlDocument.CreateElement("buyer");
+            XmlElement reason = xmlDocument.CreateElement("reason");
+            XmlElement docDate = xmlDocument.CreateElement("docDate");
+            docNumber.InnerText = DocNumber;
+            sender.InnerText = Sender;
+            buyer.InnerText = Buyer;
+            reason.InnerText = Reason;
+            docDate.InnerText = DocDate.ToString("dd.MM.yyyy");
+            docHeader.AppendChild(docNumber);
+            docHeader.AppendChild(sender);
+            docHeader.AppendChild(buyer);
+            docHeader.AppendChild(reason);
+            docHeader.AppendChild(docDate);
+            int i = 1;
+            foreach (var item in Items)
+            {
+                XmlElement lineItem = xmlDocument.CreateElement("lineItem");
+                lineItem.SetAttribute("number", i.ToString());
+                XmlElement posName = xmlDocument.CreateElement("posName");
+                XmlElement posArt = xmlDocument.CreateElement("posArt");
+                XmlElement posCount = xmlDocument.CreateElement("posCount");
+                XmlElement posPrice = xmlDocument.CreateElement("posPrice");
+                XmlElement posSum = xmlDocument.CreateElement("posSum");
+                lineItem.AppendChild(posName);
+                lineItem.AppendChild(posArt);
+                lineItem.AppendChild(posCount);
+                lineItem.AppendChild(posPrice);
+                lineItem.AppendChild(posSum);
+                posName.InnerText = item.Name;
+                posArt.InnerText = item.Art;
+                posCount.InnerText = item.Count.ToString();
+                posPrice.InnerText = item.Price.ToString();
+                posSum.InnerText = item.Sum.ToString();
+                docLines.AppendChild(lineItem);
+                i++;
+            }
+            XmlElement summary = xmlDocument.CreateElement("summary");
+            XmlElement reciever = xmlDocument.CreateElement("reciever");
+            XmlElement application = xmlDocument.CreateElement("application");
+            reciever.InnerText = Reciever;
+            docFooter.AppendChild(summary);
+            docFooter.AppendChild(reciever);
+            docFooter.AppendChild(application);
+            XmlElement sumCount = xmlDocument.CreateElement("sumCount");
+            XmlElement sumSum = xmlDocument.CreateElement("sumSum");
+            sumCount.InnerText = DocCount.ToString();
+            sumSum.InnerText = DocSum.ToString();
+            summary.AppendChild(sumCount);
+            summary.AppendChild(sumSum);
+
+            xmlDocument.Save(filePath);
+            return;
         }
     }
 }

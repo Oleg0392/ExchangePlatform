@@ -1,0 +1,36 @@
+﻿@model ExchangePlatform.Models.Implemenation.OrderModel
+@{
+	Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="second">
+	<p>Номер заказа: @Model.DocNumber</p>
+	<p>Дата заказа: @Model.DocDate</p>
+	<br>
+	<p>Отправитель: @Model.Sender</p>
+	<p>Покупатель: @Model.Buyer</p>
+	<p>Грузополучатель: @Model.Reciever</p>
+	<p>Онование: @Model.Reason</p>
+	<br>
+</div>
+<div class="positionhead">№ | Name				| Count | Price</div>
+@for (int i = 0; i < Model.Items.Count; i++)
+{
+	<div class="positions">@(i+1) | @Model.Items[i].Name  |  @Model.Items[i].Art  |  @Model.Items[i].Count  |  @Model.Items[i].Price  |  @Model.Items[i].Sum</div>
+}
+<div class="first">
+	<br>
+	<p>Общяя сумма: @Model.DocSum</p>
+	<p>Общее количество: @Model.DocCount</p>
+	<br>
+</div>
+<br />
+<br />
+<form method="get" action="/Home/DownloadOrder/@Model.DocId"><button>Скачать (xml)</button></form>
+<form method="get" action="/Home/DeleteOrder/@Model.DocId"><button>Удалить</button></form>
+<form method="get" action="/Home/EditOrder/@Model.DocId"><button>Редактировать</button></form>
+<form method="get" action="/Home/CreatePosition/@Model.DocId"><button>Добавить позицию</button></form>
+<br />
+<br />
+<form method="get" action="/Home/OrderList">
+	<button>Назад к заказам</button>
+</form>

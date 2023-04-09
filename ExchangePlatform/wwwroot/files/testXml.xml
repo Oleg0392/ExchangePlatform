@@ -1,45 +1,34 @@
-<?xml version="1.0" encoding="utf-8"?>
-<export>
-<pallet name="PLT1" volume="25">
-	<address>
-		<country>Japan</country>
-		<city>Tokio</city>
-		<street>Jotaro</street>
-	</address>	
-</pallet>
-<pallet name="PLT2" volume="25">
-	<address>
-		<country>USA</country>
-		<city>NewYork</city>
-		<street>Manhattan</street>
-	</address>	
-</pallet>
-<pallet name="PLT3" volume="25">
-	<address>
-		<country>Russia</country>
-		<city>Magnitigorsk</city>
-		<street>Sovetskaya</street>
-	</address>	
-</pallet>
-<pallet name="PLTL8" volume="15">
-	<address>
-		<country>USA</country>
-		<city>Chicago</city>
-		<street>Christmas</street>
-	</address>	
-</pallet>
-<pallet name="PLTL11" volume="15">
-	<address>
-		<country>China</country>
-		<city>Pekin</city>
-		<street>ChiHuanTau</street>
-	</address>	
-</pallet>
-<pallet name="PLTL12" volume="15">
-	<address>
-		<country>England(UK)</country>
-		<city>London</city>
-		<street>Journals</street>
-	</address>	
-</pallet>
-</export> 
+﻿<?xml version="1.0" encoding="utf-8"?>
+<document>
+  <docHeader>
+    <docNumber>T0009875</docNumber>
+    <sender>SteelTech Inc.</sender>
+    <buyer>Warner Bros. Inc.</buyer>
+    <reason>Contract No.245</reason>
+    <docDate>07.04.2023</docDate>
+  </docHeader>
+  <docLines>
+    <lineItem number="1">
+      <posName>Ladder 4 steps</posName>
+      <posArt>342343</posArt>
+      <posCount>3</posCount>
+      <posPrice>3500.00</posPrice>
+      <posSum>10500.00</posSum>
+    </lineItem>
+    <lineItem number="2">
+      <posName>Doors Metal Grey 2050x75</posName>
+      <posArt>768766</posArt>
+      <posCount>2</posCount>
+      <posPrice>7800.00</posPrice>
+      <posSum>15600.00</posSum>
+    </lineItem>
+  </docLines>
+  <docFooter>
+    <summary>
+      <sumCount>5</sumCount>
+      <sumSum>26100.00</sumSum>
+    </summary>
+    <reciever>Warner Bros. Inc. (main)</reciever>
+    <application />
+  </docFooter>
+</document>

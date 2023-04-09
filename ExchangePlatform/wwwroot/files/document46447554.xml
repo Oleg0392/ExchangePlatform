@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<document>
+	<docHeader>
+		<docNumber>W0045297</docNumber>
+		<sender>Concelar+ Inc.</sender>
+		<buyer>Warner Bros. Inc.</buyer>
+		<reason>Contract N.786</reason>
+		<docDate>31.03.2023</docDate>
+	</docHeader>
+	<docLines>
+		<lineItem number="1">
+			<posName>Pencil dark blue</posName>
+			<posArt>3435345</posArt>
+			<posCount>80</posCount>
+			<posPrice>45</posPrice>
+			<posSum>3600.00</posSum>
+		</lineItem>
+		<lineItem number="2">
+			<posName>Canvas solid yellow-white</posName>
+			<posArt>90803984</posArt>
+			<posCount>35</posCount>
+			<posPrice>260.00</posPrice>
+			<posSum>9100.00</posSum>
+		</lineItem>
+		<lineItem number="3">
+			<posName>Paper A2 200 pts</posName>
+			<posArt>673432786</posArt>
+			<posCount>10</posCount>
+			<posPrice>347.00</posPrice>
+			<posSum>3470.00</posSum>
+		</lineItem>
+	</docLines>
+	<docFooter>
+		<summary>
+			<sumCount>125</sumCount>
+			<sumSum>16170.00</sumSum>
+		</summary>
+		<reciever>Warner Bros. Inc.</reciever>
+		<application></application>
+	</docFooter>
+</document>

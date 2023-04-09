@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Users\\khusainovom\\source\\repos\\ExchangePlatform\\ExchangePlatform\\ExchangePlatform.csproj": {}
+    "C:\\Users\\Oleg\\source\\repos\\ExchangePlatform\\ExchangePlatform\\ExchangePlatform.csproj": {}
   },
   "projects": {
-    "D:\\Users\\khusainovom\\source\\repos\\ExchangePlatform\\ExchangePlatform\\ExchangePlatform.csproj": {
+    "C:\\Users\\Oleg\\source\\repos\\ExchangePlatform\\ExchangePlatform\\ExchangePlatform.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Users\\khusainovom\\source\\repos\\ExchangePlatform\\ExchangePlatform\\ExchangePlatform.csproj",
+        "projectUniqueName": "C:\\Users\\Oleg\\source\\repos\\ExchangePlatform\\ExchangePlatform\\ExchangePlatform.csproj",
         "projectName": "ExchangePlatform",
-        "projectPath": "D:\\Users\\khusainovom\\source\\repos\\ExchangePlatform\\ExchangePlatform\\ExchangePlatform.csproj",
-        "packagesPath": "D:\\Users\\khusainovom\\.nuget\\packages\\",
-        "outputPath": "D:\\Users\\khusainovom\\source\\repos\\ExchangePlatform\\ExchangePlatform\\obj\\",
+        "projectPath": "C:\\Users\\Oleg\\source\\repos\\ExchangePlatform\\ExchangePlatform\\ExchangePlatform.csproj",
+        "packagesPath": "C:\\Users\\Oleg\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Oleg\\source\\repos\\ExchangePlatform\\ExchangePlatform\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "D:\\Users\\khusainovom\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Oleg\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -67,7 +67,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.301\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.400\\RuntimeIdentifierGraph.json"
         }
       }
     }

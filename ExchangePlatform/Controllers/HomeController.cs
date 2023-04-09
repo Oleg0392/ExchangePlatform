@@ -41,20 +41,14 @@ namespace ExchangePlatform.Controllers
                 {
                     document.CopyTo(stream);
                 }
-                OrderModel model = new OrderModel(newPath);
-
-                // вставка заголовок заказа в БД
-                int RowsAffected = queryManager.ExecuteNonQuery(model.GetInsertCommand());
-
-                // взятие DocId заказа из БД
-                queryManager.ExecuteQuery(model.GetSelectDocId());
+                               
+                OrderModel model = new OrderModel(newPath);              
+                int RowsAffected = queryManager.ExecuteNonQuery(model.GetInsertCommand());    // вставка заголовок заказа в БД
+             
+                queryManager.ExecuteQuery(model.GetDocIdByDocNumber());      // взятие DocId заказа из БД
                 int orderId = Convert.ToInt32(queryManager.GetResultObject());
-
-                // вставка позиций заказа в БД с взятым DocId для связки с заказом
-                foreach (var item in model.Items)
-                {
-                    queryManager.ExecuteNonQuery(item.GetInsertCommand(orderId));
-                }              
+               
+                foreach (var item in model.Items)  { queryManager.ExecuteNonQuery(item.GetInsertCommand(orderId)); }   // вставка позиций заказа в БД с взятым DocId для связки с заказом        
 
                 ViewBag.Title = "Upload complete. " + RowsAffected.ToString() + " rows affected.";
                 return View("Complete", new DocumentFile() { fileName = document.FileName });
@@ -82,10 +76,8 @@ namespace ExchangePlatform.Controllers
         }
 
         [HttpGet]
-        public IActionResult EditOrder(int id)
-        {
-            ViewBag.Title = "Edit Order Page";
-
+        public IActionResult GetOrder(int id)
+        {           
             OrderModel model = new ();
             queryManager.ExecuteQuery(model.GetSelectCommand(id));
             model.LoadOrderModel(queryManager.GetResultObjectArray1D());
@@ -93,6 +85,17 @@ namespace ExchangePlatform.Controllers
             queryManager.ExecuteQuery(ItemModel.GetSelectAllCommand(model.DocId));
             model.LoadItems(queryManager.GetResultObjectArray2D());
 
+            ViewBag.Title = "Order " + model.DocNumber + " Page";
+
+            return View(model);
+        }
+        
+        [HttpGet]
+        public IActionResult EditOrder(int id)
+        {
+            OrderModel model = new OrderModel();
+            queryManager.ExecuteQuery(model.GetSelectCommand(id));
+            model.LoadOrderModel(queryManager.GetResultObjectArray1D());
             return View(model);
         }
 
@@ -111,16 +114,83 @@ namespace ExchangePlatform.Controllers
                 if (differents[i] == 0) continue;
                 queryManager.ExecuteNonQuery(model.GetUpdateCommand(i, newValues[i]));
             }
-            return View("OrderList");
+            ViewBag.Title = "Order was updated successeful!";
+            return View("ResultAction");
         }
 
-        /*public FileResult DownloadTest()
+        public IActionResult DeleteOrder(int id)
         {
+            OrderModel model = new();
+            queryManager.ExecuteNonQuery(model.GetDeleteCommand(id));
+            ItemModel itemModel = new();
+            queryManager.ExecuteNonQuery(itemModel.GetDeleteCommand(id));
+            ViewBag.Title = "Order deleted successeful!";
+            return View("ResultAction");
+        }
+
+        [HttpGet]
+        public IActionResult CreateOrder()
+        {
+            OrderModel model = new();
+            return View(model);
+        }
+
+        [HttpPost]
+        public IActionResult CreateOrder(OrderModel model)
+        {
+            int Inserted = queryManager.ExecuteNonQuery(model.GetInsertCommand());
+
+            if (Inserted > 0) ViewBag.Title = "Заказ успешно создан.";
+            else ViewBag.Title = "Не удалось записать заказ в таблицу";
+            ViewBag.Message = "/Home/OrderList/";
+            return View("ResultAction");
+        }
+
+        [HttpGet]
+        public IActionResult CreatePosition(int id)
+        {
+            ItemModel itemModel = new();
+            itemModel.DocId = id;
+            return View(itemModel);
+        }
+
+        [HttpPost]
+        public IActionResult CreatePosition(ItemModel model)
+        {
+            
+            OrderModel orderModel = new();
+            queryManager.ExecuteQuery(orderModel.GetSelectCommand(model.DocId));
+            orderModel.LoadOrderModel(queryManager.GetResultObjectArray1D());
+
+            model.Sum = model.Price * model.Count;
+            decimal NewSum = orderModel.DocSum + model.Sum;
+            int NewCount = orderModel.DocCount + model.Count;
+
+            queryManager.ExecuteNonQuery(orderModel.GetUpdateCommand(6, NewSum));
+            queryManager.ExecuteNonQuery(orderModel.GetUpdateCommand(7, NewCount));
+            queryManager.ExecuteNonQuery(model.GetInsertCommand(orderModel.DocId));
+
+            ViewBag.Title = "Position was inserted successeful!";
+            ViewBag.Message = "/Home/GetOrder/" + model.DocId.ToString();
+            return View("ResultAction");
+        }
+
+
+        public FileResult DownloadOrder(int id)
+        {
+            OrderModel orderModel = new();
+            queryManager.ExecuteQuery(orderModel.GetSelectCommand(id));
+            orderModel.LoadOrderModel(queryManager.GetResultObjectArray1D());
+            queryManager.ExecuteQuery(ItemModel.GetSelectAllCommand(id));
+            orderModel.LoadItems(queryManager.GetResultObjectArray2D());
+
             string f_path = Path.Combine(Directory.GetCurrentDirectory(), @"wwwroot\files\testXml.xml");
+            orderModel.ToXmlDocument(f_path);
+
             byte[] fileRaw = System.IO.File.ReadAllBytes(f_path);
             string f_type = "application/xml";
             string f_name = "testXml.xml";         // [необязательный]
             return File(fileRaw, f_type, f_name);
-        }*/
+        }
     }
 }

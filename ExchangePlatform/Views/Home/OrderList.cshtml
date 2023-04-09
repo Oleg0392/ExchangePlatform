@@ -1,23 +1,31 @@
 ﻿@model List<ExchangePlatform.Models.Implemenation.OrderModel>
 @{
-	Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
-@for(int i = 1; i < @Model.Count + 1; i++)
+<p><b>Orders List</b></p>
+<br>
+<div class="orderhead">
+    DocNumber | DocDate | Sender | Reciever | DocSum
+</div>
+@for (int i = 0; i < @Model.Count; i++)
 {
-	if ((i % 2) == 0)
-	{
-		<a href="/Home/EditOrder/@Model[i].DocId">
-			<div class="second">
-				@Model[i].DocNumber | @Model[i].DocDate | @Model[i].Sender | @Model[i].Reciever | @Model[i].DocSum
-			</div>
-		</a>
-	}
-	else
-	{
-		<a href="/Home/EditOrder/@Model[i].DocId">
-			<div class="first">
-				@Model[i].DocNumber | @Model[i].DocDate | @Model[i].Sender | @Model[i].Reciever | @Model[i].DocSum
-			</div>
-		</a>
-	}
-}
+    if (((i + 1) % 2) == 0)
+    {
+<a href="/Home/GetOrder/@Model[i].DocId">
+    <div class="second">
+        @Model[i].DocNumber | @Model[i].DocDate | @Model[i].Sender | @Model[i].Reciever | @Model[i].DocSum
+    </div>
+</a>
+    }
+    else
+    {
+<a href="/Home/GetOrder/@Model[i].DocId">
+    <div class="first">
+        @Model[i].DocNumber | @Model[i].DocDate | @Model[i].Sender | @Model[i].Reciever | @Model[i].DocSum
+    </div>
+</a>
+    }
+    }
+    <br />
+    <br />
+    <a href="/Home/CreateOrder"><p>Создать новый</p></a>

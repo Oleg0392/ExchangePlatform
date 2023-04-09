@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Data;
-using System.Xml;
 using System;
 using Microsoft.Data.SqlClient;
 using ExchangePlatform.Models.Interfaces;
@@ -30,18 +29,9 @@ namespace ExchangePlatform.Models.Implemenation
 
         public ItemModel() { }
 
-        public ItemModel(XmlNode itemNode)
-        {
-            Name = itemNode.SelectSingleNode("/lineItem/posName").InnerText;
-            Art = itemNode.SelectSingleNode("/lineItem/posArt").InnerText;
-            Count = Convert.ToInt32(itemNode.SelectSingleNode("/lineItem/posCount").Value);
-            Price = Convert.ToDecimal(itemNode.SelectSingleNode("/lineItem/posPrice").Value);
-            Sum = Convert.ToDecimal(itemNode.SelectSingleNode("/lineItem/posSum").Value);
-        }
-
         public SqlCommand GetInsertCommand(int docId)
         {
-            string query = "INSERT INTO OrderItems(Name,Art,Count,Price,Sum,DocId) VALUES (@Name,@Art,@Count,@Price,@Sum,@DocId) ";
+            string query = "INSERT INTO OrderPositions (PositionName,PosArticle,PosCount,PosPrice,PosSum,HeadDocId) VALUES (@Name,@Art,@Count,@Price,@Sum,@DocId) ";
             SqlCommand command = new SqlCommand(query);
             command.Parameters.Add(new SqlParameter() { ParameterName = "@Name", DbType = ItemModelInfo["Name"], Value = Name });
             command.Parameters.Add(new SqlParameter() { ParameterName = "@Art", DbType = ItemModelInfo["Art"], Value = Art });
@@ -55,7 +45,7 @@ namespace ExchangePlatform.Models.Implemenation
         public SqlCommand GetSelectCommand(int itemId = 0)
         {
             if (itemId == 0) itemId = ItemId;
-            string query = "SELECT Name, Art, Count, Price, Sum, DocId FROM OrderItems WHERE ItemId = @ItemId";
+            string query = "SELECT PositionName, PosArticle, PosCount, PosPrice, PosSum, HeadDocId FROM OrderPositions WHERE LineId = @ItemId";
             SqlCommand command = new SqlCommand(query);
             command.Parameters.Add(new SqlParameter()
             {
@@ -73,12 +63,21 @@ namespace ExchangePlatform.Models.Implemenation
 
         public SqlCommand GetDeleteCommand(int Id = 0)
         {
-            return null;
+            string query = "DELETE FROM OrderPositions WHERE HeadDocId = @HeadDocId";
+            SqlCommand command = new SqlCommand(query);
+            command.Parameters.Add(new SqlParameter()
+            {
+                ParameterName = "@HeadDocId",
+                DbType = ItemModelInfo["DocId"],
+                Value = Id
+            });
+
+            return command;
         }
 
         public static SqlCommand GetSelectAllCommand(int docId = 0)
         {
-            string query = "SELECT Name, Art, Count, Price, Sum, DocId FROM OrderItems WHERE DocId = @DocId";
+            string query = "SELECT PositionName, PosArticle, PosCount, PosPrice, PosSum, HeadDocId FROM OrderPositions WHERE HeadDocId = @DocId";
             SqlCommand command = new SqlCommand(query);
             command.Parameters.Add(new SqlParameter()
             {
@@ -88,19 +87,10 @@ namespace ExchangePlatform.Models.Implemenation
             });
             return command;
         }
-
-        public ItemModel(object[] QueryResult)
-        {
-            Name = QueryResult[0].ToString();
-            Art = QueryResult[1].ToString();
-            Count = Convert.ToInt32(QueryResult[2]);
-            Price = Convert.ToDecimal(QueryResult[3]);
-            Sum = Convert.ToDecimal(QueryResult[4]);
-            DocId = Convert.ToInt32(QueryResult[5]);
-        }
-
+        
         public void LoadItemModel(object[] QueryResult)
         {
+            if (QueryResult == null) return;
             Name = QueryResult[0].ToString();
             Art = QueryResult[1].ToString();
             Count = Convert.ToInt32(QueryResult[2]);

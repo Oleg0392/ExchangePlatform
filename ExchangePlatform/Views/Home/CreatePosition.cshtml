@@ -1,0 +1,21 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model ExchangePlatform.Models.Implemenation.ItemModel
+
+<form method="post" action="/Home/CreatePosition">
+    <div class="positionhead">New Position</div>
+    <div class="positions">
+        <br>
+        <p>Наименование: <input type="text" name="Name" value="@Model.Name"/></p>
+        <p>Артикул: <input type="text" name="Art" value="@Model.Art" /></p>
+        <br>
+        <p>Цена: <input type="number" name="Price" value="@Model.Price" /></p>
+        <p>Количество: <input type="number" name="Count" value="@Model.Count" /></p>
+        <input type="hidden" name="DocId" value="@Model.DocId" />
+        <br>
+
+    </div>
+    <br><br>
+    <button>Создать</button>
+</form>

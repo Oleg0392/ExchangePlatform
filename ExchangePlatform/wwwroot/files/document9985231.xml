@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<document>
+	<docHeader>
+		<docNumber>C0009867</docNumber>
+		<sender>Concelar North filial Company</sender>
+		<buyer>Columbia Pictures Purchases Company</buyer>
+		<reason>Contract N.988766</reason>
+		<docDate>01.04.2023</docDate>
+	</docHeader>
+	<docLines>
+		<lineItem number="1">
+			<posName>Office chair 'Comfort' series black</posName>
+			<posArt>682763232</posArt>
+			<posCount>7</posCount>
+			<posPrice>4320.00</posPrice>
+			<posSum>30240.00</posSum>
+		</lineItem>
+		<lineItem number="2">
+			<posName>Canvas 350x500 24pcs</posName>
+			<posArt>234324324</posArt>
+			<posCount>3</posCount>
+			<posPrice>685.00</posPrice>
+			<posSum>2055.00</posSum>
+		</lineItem>
+		<lineItem number="3">
+			<posName>Stickers with glue 30x40 50pcs.</posName>
+			<posArt>675464534</posArt>
+			<posCount>10</posCount>
+			<posPrice>154.00</posPrice>
+			<posSum>1540.00</posSum>
+		</lineItem>
+	</docLines>
+	<docFooter>
+		<summary>
+			<sumCount>20</sumCount>
+			<sumSum>33835.00</sumSum>
+		</summary>
+		<reciever>Columbia Pictures Corp.</reciever>
+		<application></application>
+	</docFooter>
+</document>
