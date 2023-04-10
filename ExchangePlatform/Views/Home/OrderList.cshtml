@@ -1,31 +1,49 @@
-﻿@model List<ExchangePlatform.Models.Implemenation.OrderModel>
+﻿@model ExchangePlatform.Models.Implemenation.OrdersTableModel
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <p><b>Orders List</b></p>
 <br>
+<br />
+<form method="post" action="/Home/OrderList">
+    <p>       Filter by provider:
+        <select name="provider" id="provider" multiple size="1">
+            @for (int i = 0; i < Model.Providers.Count; i++)
+            {
+                <option value="@Model.Providers[i].ProviderName">@Model.Providers[i].ProviderName</option>
+            }
+        </select>
+    </p>
+    <p>       Filter by Document Date:
+	     <input type="date" name="dateBegin" value="01.01.2023"/>
+		 <input type="date" name="dateEnd" value="31.01.2023"/>
+    </p>
+    <button>Применить</button>    
+<br />
+<br />
 <div class="orderhead">
     DocNumber | DocDate | Sender | Reciever | DocSum
 </div>
-@for (int i = 0; i < @Model.Count; i++)
+@for (int i = 0; i < Model.Orders.Count; i++)
 {
     if (((i + 1) % 2) == 0)
     {
-<a href="/Home/GetOrder/@Model[i].DocId">
+<a href="/Home/GetOrder/@Model.Orders[i].DocId">
     <div class="second">
-        @Model[i].DocNumber | @Model[i].DocDate | @Model[i].Sender | @Model[i].Reciever | @Model[i].DocSum
+        @Model.Orders[i].DocNumber | @Model.Orders[i].DocDate | @Model.Orders[i].Sender | @Model.Orders[i].Reciever | @Model.Orders[i].DocSum
     </div>
 </a>
     }
     else
     {
-<a href="/Home/GetOrder/@Model[i].DocId">
+<a href="/Home/GetOrder/@Model.Orders[i].DocId">
     <div class="first">
-        @Model[i].DocNumber | @Model[i].DocDate | @Model[i].Sender | @Model[i].Reciever | @Model[i].DocSum
+        @Model.Orders[i].DocNumber | @Model.Orders[i].DocDate | @Model.Orders[i].Sender | @Model.Orders[i].Reciever | @Model.Orders[i].DocSum
     </div>
 </a>
     }
-    }
+}
+ </form>
     <br />
     <br />
     <a href="/Home/CreateOrder"><p>Создать новый</p></a>

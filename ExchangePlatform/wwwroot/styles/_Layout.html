@@ -52,6 +52,25 @@
 						
 						<p><b>Orders List</b></p>
 						<br>
+						<form method="post" action="/Home/OrderList">
+							<p>       Filter by provider:
+								<select multiple size="3">           
+									<option>Model.Providers[0]</option>
+									<option>Model.Providers[1]</option>
+									<option>Model.Providers[2]</option>
+									<option>Model.Providers[3]</option>
+									<option>Model.Providers[4]</option>
+								</select>
+								<button>Применить</button>
+							</p>
+						</form>
+						<form method="post" action="/Home/OrderList">
+							<p>       Filter by Document Date:
+								<input type="datetime" name="dateBegin" value="01.01.2023"/>
+								<input type="datetime" name="dateEnd" value="31.01.2023"/>
+								<button>Применить</button>
+							</p>
+						</form>
 						<div class="orderhead">
 							DocNumber | DocDate | Sender | Reciever | DocSum
 						</div>

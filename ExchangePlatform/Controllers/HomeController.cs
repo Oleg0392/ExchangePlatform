@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
 using System.Web;
 using System.IO;
+using System.Linq;
 using System.Collections.Generic;
 using ExchangePlatform.Models;
 using ExchangePlatform.DataProviders.Intrefaces;
@@ -57,22 +58,60 @@ namespace ExchangePlatform.Controllers
             return View();
         }
 
+        [HttpGet]
         public IActionResult OrderList()
         {
             ViewBag.Title = "Orders List Page";
-            List<OrderModel> list = new List<OrderModel>();
+            //List<OrderModel> list = new List<OrderModel>();
+            OrdersTableModel tableModel = new();
 
             queryManager.ExecuteQuery(OrderModel.GetSelectAllCommand());      //new SqlCommand("SELECT DocNumber, DocDate, Buyer, Reciever, Sender, Reason, DocAllSum, DocAllCount FROM Orders"));  // тут важен порядок
-            object[,] queryResult = queryManager.GetResultObjectArray2D();
+            object[,] orders = queryManager.GetResultObjectArray2D();
 
-            if (queryResult == null) return Redirect("/");
-            for (int i = 0; i < queryResult.GetLength(0); i++)
+            if (orders == null) return Redirect("/");
+
+            for (int i = 0; i < orders.GetLength(0); i++)
             {
-                object[] temp = new object[queryResult.GetLength(1)];
-                for (int j = 0; j < temp.Length; j++)  temp[j] = queryResult[i,j];
-                list.Add(new OrderModel(temp));
+                object[] temp = new object[orders.GetLength(1)];
+                for (int j = 0; j < temp.Length; j++)  temp[j] = orders[i,j];
+                tableModel.Orders.Add(new OrderModel(temp));
             }
-            return View(list);
+
+            queryManager.ExecuteQuery(ProviderModel.GetSelectAllCommand());
+            object[,] providers = queryManager.GetResultObjectArray2D();
+
+            for (int i = 0; i < providers.GetLength(0); i++)
+            {
+                object[] temp = new object[providers.GetLength(1)];
+                for (int j = 0; j < temp.Length; j++) temp[j] = providers[i,j];
+                tableModel.Providers.Add(new ProviderModel(temp));
+            }
+
+            return View(tableModel);
+        }
+
+        [HttpPost]
+        public IActionResult OrderList(OrdersTableModel model,IFormCollection keyValuePairs)
+        {
+            if (keyValuePairs == null) return View(model);
+            if (keyValuePairs.ContainsKey("provider"))
+            {
+                string provider = keyValuePairs["provider"];
+                var filteredOrder = model.Orders.Where(ord => ord.Sender == provider);
+                model.Orders.Clear();
+                foreach (var pair in filteredOrder) { model.Orders.Add(pair); }
+            }
+            if (keyValuePairs.ContainsKey("dateBegin"))
+            {
+                DateTime dtBegin = DateTime.ParseExact(keyValuePairs["dateBegin"],"yyyy-MM-dd",null);
+                DateTime dtEnd;
+                if (keyValuePairs["dateEnd"] != "") dtEnd = DateTime.ParseExact(keyValuePairs["dateEnd"], "yyyy-MM-dd", null);
+                else dtEnd = DateTime.MaxValue;
+
+                var filtered = model.Orders.Where(ord => (ord.DocDate > dtBegin) && ord.DocDate < dtEnd);
+                foreach (var pair in filtered) { model.Orders.Add(pair); }
+            }
+            return View(model);
         }
 
         [HttpGet]

@@ -15,6 +15,7 @@ namespace ExchangePlatform.Models.Implemenation
         public decimal Sum { get; set; }
         public int ItemId { get; set; }
         public int DocId { get; set; }
+        public int LineId { get; set; }
 
         protected static Dictionary<string, DbType> ItemModelInfo = new Dictionary<string, DbType>()
         {
@@ -24,14 +25,15 @@ namespace ExchangePlatform.Models.Implemenation
             { "Price", DbType.Decimal },
             { "Sum", DbType.Decimal },
             { "ItemId", DbType.Int32 },
-            { "DocId", DbType.Int32 }
+            { "DocId", DbType.Int32 },
+            { "LineId", DbType.Int32 }
         };
 
         public ItemModel() { }
 
         public SqlCommand GetInsertCommand(int docId)
         {
-            string query = "INSERT INTO OrderPositions (PositionName,PosArticle,PosCount,PosPrice,PosSum,HeadDocId) VALUES (@Name,@Art,@Count,@Price,@Sum,@DocId) ";
+            string query = "INSERT INTO OrderPositions (PositionName,PosArticle,PosCount,PosPrice,PosSum,HeadDocId,LineId) VALUES (@Name,@Art,@Count,@Price,@Sum,@DocId,@LineId) ";
             SqlCommand command = new SqlCommand(query);
             command.Parameters.Add(new SqlParameter() { ParameterName = "@Name", DbType = ItemModelInfo["Name"], Value = Name });
             command.Parameters.Add(new SqlParameter() { ParameterName = "@Art", DbType = ItemModelInfo["Art"], Value = Art });
@@ -39,13 +41,14 @@ namespace ExchangePlatform.Models.Implemenation
             command.Parameters.Add(new SqlParameter() { ParameterName = "@Price", DbType = ItemModelInfo["Price"], Value = Price });
             command.Parameters.Add(new SqlParameter() { ParameterName = "@Sum", DbType = ItemModelInfo["Sum"], Value = Sum });
             command.Parameters.Add(new SqlParameter() { ParameterName = "@DocId", DbType = ItemModelInfo["DocId"], Value = docId });
+            command.Parameters.Add(new SqlParameter() { ParameterName = "@LineId", DbType = ItemModelInfo["LineId"], Value = LineId });
             return command;
         }
 
         public SqlCommand GetSelectCommand(int itemId = 0)
         {
             if (itemId == 0) itemId = ItemId;
-            string query = "SELECT PositionName, PosArticle, PosCount, PosPrice, PosSum, HeadDocId FROM OrderPositions WHERE LineId = @ItemId";
+            string query = "SELECT LineId, PositionName, PosArticle, PosCount, PosPrice, PosSum, HeadDocId FROM OrderPositions WHERE LineId = @ItemId";
             SqlCommand command = new SqlCommand(query);
             command.Parameters.Add(new SqlParameter()
             {
@@ -77,7 +80,7 @@ namespace ExchangePlatform.Models.Implemenation
 
         public static SqlCommand GetSelectAllCommand(int docId = 0)
         {
-            string query = "SELECT PositionName, PosArticle, PosCount, PosPrice, PosSum, HeadDocId FROM OrderPositions WHERE HeadDocId = @DocId";
+            string query = "SELECT LineId, PositionName, PosArticle, PosCount, PosPrice, PosSum, HeadDocId FROM OrderPositions WHERE HeadDocId = @DocId";
             SqlCommand command = new SqlCommand(query);
             command.Parameters.Add(new SqlParameter()
             {
@@ -91,12 +94,13 @@ namespace ExchangePlatform.Models.Implemenation
         public void LoadItemModel(object[] QueryResult)
         {
             if (QueryResult == null) return;
-            Name = QueryResult[0].ToString();
-            Art = QueryResult[1].ToString();
-            Count = Convert.ToInt32(QueryResult[2]);
-            Price = Convert.ToDecimal(QueryResult[3]);
-            Sum = Convert.ToDecimal(QueryResult[4]);
-            DocId = Convert.ToInt32(QueryResult[5]);
+            LineId = Convert.ToInt32(QueryResult[0]);
+            Name = QueryResult[1].ToString();
+            Art = QueryResult[2].ToString();
+            Count = Convert.ToInt32(QueryResult[3]);
+            Price = Convert.ToDecimal(QueryResult[4]);
+            Sum = Convert.ToDecimal(QueryResult[5]);
+            DocId = Convert.ToInt32(QueryResult[6]);
         }
     }
 }
