@@ -80,6 +80,8 @@ namespace ExchangePlatform.Controllers
             queryManager.ExecuteQuery(ProviderModel.GetSelectAllCommand());
             object[,] providers = queryManager.GetResultObjectArray2D();
 
+            //var selectlist = MultiSelectList()
+
             for (int i = 0; i < providers.GetLength(0); i++)
             {
                 object[] temp = new object[providers.GetLength(1)];
@@ -91,7 +93,7 @@ namespace ExchangePlatform.Controllers
         }
 
         [HttpPost]
-        public IActionResult OrderList(OrdersTableModel model,IFormCollection keyValuePairs)
+        public IActionResult OrderList(OrdersTableModel model,FormCollection keyValuePairs)
         {
             if (keyValuePairs == null) return View(model);
             if (keyValuePairs.ContainsKey("provider"))
@@ -200,7 +202,10 @@ namespace ExchangePlatform.Controllers
             OrderModel orderModel = new();
             queryManager.ExecuteQuery(orderModel.GetSelectCommand(model.DocId));
             orderModel.LoadOrderModel(queryManager.GetResultObjectArray1D());
+            queryManager.ExecuteQuery(ItemModel.GetSelectAllCommand(orderModel.DocId));
+            int lineNum = queryManager.GetResultObjectArray2D().GetLength(0);
 
+            model.LineNumber = lineNum + 1;
             model.Sum = model.Price * model.Count;
             decimal NewSum = orderModel.DocSum + model.Sum;
             int NewCount = orderModel.DocCount + model.Count;

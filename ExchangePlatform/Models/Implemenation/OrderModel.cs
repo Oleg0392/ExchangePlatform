@@ -60,7 +60,7 @@ namespace ExchangePlatform.Models.Implemenation
                 {
                     Items.Add(new ItemModel()
                     {
-                        LineId = Convert.ToInt32(itemNode.Attributes["number"].Value),
+                        LineNumber = Convert.ToInt32(itemNode.Attributes["number"].Value),
                         Name = itemNode.SelectSingleNode("posName").InnerText,
                         Art = itemNode.SelectSingleNode("posArt").InnerText,
                         Count = Convert.ToInt32(itemNode.SelectSingleNode("posCount").InnerText),
@@ -265,7 +265,7 @@ namespace ExchangePlatform.Models.Implemenation
             foreach (var item in Items)
             {
                 XmlElement lineItem = xmlDocument.CreateElement("lineItem");
-                if (item.LineId > 0) lineItem.SetAttribute("number", item.LineId.ToString());
+                if (item.LineNumber > 0) lineItem.SetAttribute("number", item.LineNumber.ToString());
                 else lineItem.SetAttribute("number", i.ToString());
                 XmlElement posName = xmlDocument.CreateElement("posName");
                 XmlElement posArt = xmlDocument.CreateElement("posArt");

@@ -31,7 +31,7 @@ namespace ExchangePlatform.Models.Implemenation
 
         public static SqlCommand GetSelectAllCommand()
         {
-            return new SqlCommand("SELECT Id, Name FROM Providers");           
+            return new SqlCommand("SELECT ProviderId, ProviderName FROM Providers");           
         }
 
         public ProviderModel() { }

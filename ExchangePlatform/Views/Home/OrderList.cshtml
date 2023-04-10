@@ -5,45 +5,47 @@
 <p><b>Orders List</b></p>
 <br>
 <br />
-<form method="post" action="/Home/OrderList">
-    <p>       Filter by provider:
-        <select name="provider" id="provider" multiple size="1">
+<form method="post" action="/Home/OrderList">   
+    <p>
+        Filter by Document Date:
+        <input type="date" name="dateBegin" value="01.01.2023" />
+        <input type="date" name="dateEnd" value="31.01.2023" />
+    </p>
+    <p>
+        Filter by provider:
+        <select name="Provider.Name" id="Provider.Name" multiple size="1">
             @for (int i = 0; i < Model.Providers.Count; i++)
             {
-                <option value="@Model.Providers[i].ProviderName">@Model.Providers[i].ProviderName</option>
+                <option name="Provider.Name" value="@Model.Providers[i].ProviderName">@Model.Providers[i].ProviderName</option>
             }
         </select>
-    </p>
-    <p>       Filter by Document Date:
-	     <input type="date" name="dateBegin" value="01.01.2023"/>
-		 <input type="date" name="dateEnd" value="31.01.2023"/>
-    </p>
-    <button>Применить</button>    
-<br />
-<br />
-<div class="orderhead">
-    DocNumber | DocDate | Sender | Reciever | DocSum
-</div>
-@for (int i = 0; i < Model.Orders.Count; i++)
-{
-    if (((i + 1) % 2) == 0)
-    {
-<a href="/Home/GetOrder/@Model.Orders[i].DocId">
-    <div class="second">
-        @Model.Orders[i].DocNumber | @Model.Orders[i].DocDate | @Model.Orders[i].Sender | @Model.Orders[i].Reciever | @Model.Orders[i].DocSum
+        <input type="submit" value="Применить" />
+    </p>   
+    <br />
+    <br />
+    <div class="orderhead">
+        DocNumber | DocDate | Sender | Reciever | DocSum
     </div>
-</a>
-    }
-    else
+    @for (int i = 0; i < Model.Orders.Count; i++)
     {
-<a href="/Home/GetOrder/@Model.Orders[i].DocId">
-    <div class="first">
-        @Model.Orders[i].DocNumber | @Model.Orders[i].DocDate | @Model.Orders[i].Sender | @Model.Orders[i].Reciever | @Model.Orders[i].DocSum
-    </div>
-</a>
+        if (((i + 1) % 2) == 0)
+        {
+            <a href="/Home/GetOrder/@Model.Orders[i].DocId">
+                <div class="second">
+                    @Model.Orders[i].DocNumber | @Model.Orders[i].DocDate | @Model.Orders[i].Sender | @Model.Orders[i].Reciever | @Model.Orders[i].DocSum
+                </div>
+            </a><input type="hidden" name="Orders[@i].DocNumber" value="@Model.Orders[i].DocNumber" /><input type="hidden" name="Orders[@i].DocDate" value="@Model.Orders[i].DocDate" /><input type="hidden" name="Orders[@i].Sender" value="@Model.Orders[i].Sender" /><input type="hidden" name="Orders[@i].Recieve" value="@Model.Orders[i].Reciever" /><input type="hidden" name="Orders[@i].DocSum" value="@Model.Orders[i].DocSum" />
+        }
+        else
+        {
+            <a href="/Home/GetOrder/@Model.Orders[i].DocId">
+                <div class="first">
+                    @Model.Orders[i].DocNumber | @Model.Orders[i].DocDate | @Model.Orders[i].Sender | @Model.Orders[i].Reciever | @Model.Orders[i].DocSum
+                </div>
+            </a><input type="hidden" name="Orders[@i].DocNumber" value="@Model.Orders[i].DocNumber" /><input type="hidden" name="Orders[@i].DocDate" value="@Model.Orders[i].DocDate" /><input type="hidden" name="Orders[@i].Sender" value="@Model.Orders[i].Sender" /><input type="hidden" name="Orders[@i].Recieve" value="@Model.Orders[i].Reciever" /><input type="hidden" name="Orders[@i].DocSum" value="@Model.Orders[i].DocSum" />
+        }
     }
-}
- </form>
+</form>
     <br />
     <br />
     <a href="/Home/CreateOrder"><p>Создать новый</p></a>
