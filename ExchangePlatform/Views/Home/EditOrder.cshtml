@@ -10,6 +10,10 @@
         <p>Номер заказа: <input type="text" name="DocNumber" value="@Model.DocNumber" /></p>
         <p>Дата заказа: <input type="datetime" name="DocDate" value="@Model.DocDate" /></p>
         <br>
+        <select name="Sender">
+            <option value="Model.AllProviders[0].Name">provider1</option>
+            <option value="Model.AllProviders[1].Name">provider2</option>
+        </select>
         <p>Отправитель: <input type="text" name="Sender" value="@Model.Sender" /></p>
         <p>Покупатель: <input type="text" name="Buyer" value="@Model.Buyer" /></p>
         <p>Грузополучатель: <input type="text" name="Reciever" value="@Model.Reciever" /></p>

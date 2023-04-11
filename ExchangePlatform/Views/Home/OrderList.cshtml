@@ -7,20 +7,25 @@
 <br />
 <form method="post" action="/Home/OrderList">   
     <p>
-        Filter by Document Date:
+        Filter by Document Date:      
         <input type="date" name="dateBegin" value="01.01.2023" />
         <input type="date" name="dateEnd" value="31.01.2023" />
     </p>
+    <input type="submit" value="Применить" />
+</form>
+<form method="post">
     <p>
         Filter by provider:
-        <select name="Provider.Name" id="Provider.Name" multiple size="1">
-            @for (int i = 0; i < Model.Providers.Count; i++)
+        <select name="provider" multiple size="1">
+            @foreach(var provider in Model.Providers)
             {
-                <option name="Provider.Name" value="@Model.Providers[i].ProviderName">@Model.Providers[i].ProviderName</option>
+                <option name="@provider.ProviderName" value="@provider.ProviderName">@provider.ProviderName</option>
             }
         </select>
+        <input type="hidden" value="@Model" />
         <input type="submit" value="Применить" />
-    </p>   
+    </p>
+    </form>
     <br />
     <br />
     <div class="orderhead">
@@ -45,7 +50,7 @@
             </a><input type="hidden" name="Orders[@i].DocNumber" value="@Model.Orders[i].DocNumber" /><input type="hidden" name="Orders[@i].DocDate" value="@Model.Orders[i].DocDate" /><input type="hidden" name="Orders[@i].Sender" value="@Model.Orders[i].Sender" /><input type="hidden" name="Orders[@i].Recieve" value="@Model.Orders[i].Reciever" /><input type="hidden" name="Orders[@i].DocSum" value="@Model.Orders[i].DocSum" />
         }
     }
-</form>
+
     <br />
     <br />
     <a href="/Home/CreateOrder"><p>Создать новый</p></a>

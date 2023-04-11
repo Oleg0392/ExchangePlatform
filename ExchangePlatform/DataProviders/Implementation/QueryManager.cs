@@ -25,9 +25,9 @@ namespace ExchangePlatform.DataProviders.Implenetation
         {
             int queryResult = 0;
             
-            SqlConnection sqlConnection = new SqlConnection(configuration.GetConnectionString("DefaultConnection"));
+            //SqlConnection sqlConnection = new SqlConnection(configuration.GetConnectionString("DefaultConnection"));  //WorkMachineDb
+            SqlConnection sqlConnection = new SqlConnection(configuration.GetConnectionString("WorkMachineDb"));
             command.Connection = sqlConnection;
-            //if (sqlParameters != null) foreach (var parameter in sqlParameters) sqlCommand.Parameters.Add(parameter);     //for (int i = 0; i < queryParams.Length; i++) sqlQuery = sqlQuery.Replace("prm[" + i.ToString() + "]", queryParams[i]);
             sqlConnection.Open();
             using(sqlConnection)
             {
@@ -40,7 +40,8 @@ namespace ExchangePlatform.DataProviders.Implenetation
         public void ExecuteQuery(SqlCommand command)
         {
             ClearResultFields();
-            SqlConnection sqlConnection = new SqlConnection(configuration.GetConnectionString("DefaultConnection"));
+            //SqlConnection sqlConnection = new SqlConnection(configuration.GetConnectionString("DefaultConnection"));
+            SqlConnection sqlConnection = new SqlConnection(configuration.GetConnectionString("WorkMachineDb"));
             command.Connection = sqlConnection;
             List<object[]> listData = new List<object[]>();            
             int VisibleFieldCount = 0;

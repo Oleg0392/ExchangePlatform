@@ -37,8 +37,8 @@ namespace ExchangePlatform.Controllers
         {
             if (document != null)
             {
-                string newPath = Path.Combine(@"C:\Users\Oleg\source\repos\ExchangePlatform\ExchangePlatform\wwwroot\files\", document.FileName);  //@"C:\Temp\"
-                using(var stream = new FileStream(newPath,FileMode.Create))
+                string newPath = Path.Combine(@"D:\Users\khusainovom\source\repos\ExchangePlatform\ExchangePlatform\wwwroot\files\", document.FileName);  //@"  C:\Users\Oleg\source\repos\ExchangePlatform\ExchangePlatform\wwwroot\files\
+                using (var stream = new FileStream(newPath,FileMode.Create))
                 {
                     document.CopyTo(stream);
                 }
@@ -80,8 +80,6 @@ namespace ExchangePlatform.Controllers
             queryManager.ExecuteQuery(ProviderModel.GetSelectAllCommand());
             object[,] providers = queryManager.GetResultObjectArray2D();
 
-            //var selectlist = MultiSelectList()
-
             for (int i = 0; i < providers.GetLength(0); i++)
             {
                 object[] temp = new object[providers.GetLength(1)];
@@ -93,25 +91,27 @@ namespace ExchangePlatform.Controllers
         }
 
         [HttpPost]
-        public IActionResult OrderList(OrdersTableModel model,FormCollection keyValuePairs)
+        public IActionResult OrderList(OrdersTableModel model)
         {
-            if (keyValuePairs == null) return View(model);
-            if (keyValuePairs.ContainsKey("provider"))
+            
+            if (Request.Form == null) return View(model);
+            if (Request.Form.ContainsKey("provider"))
             {
-                string provider = keyValuePairs["provider"];
-                var filteredOrder = model.Orders.Where(ord => ord.Sender == provider);
+                string provider = Request.Form["provider"];
+                List<OrderModel> tempList = new();
+                foreach (var pair in model.Orders.Where(ord => ord.Sender == provider)) { tempList.Add(pair); }
                 model.Orders.Clear();
-                foreach (var pair in filteredOrder) { model.Orders.Add(pair); }
+                model.Orders = tempList;
             }
-            if (keyValuePairs.ContainsKey("dateBegin"))
+            if (Request.Form.ContainsKey("dateBegin"))
             {
-                DateTime dtBegin = DateTime.ParseExact(keyValuePairs["dateBegin"],"yyyy-MM-dd",null);
-                DateTime dtEnd;
-                if (keyValuePairs["dateEnd"] != "") dtEnd = DateTime.ParseExact(keyValuePairs["dateEnd"], "yyyy-MM-dd", null);
-                else dtEnd = DateTime.MaxValue;
+                DateTime dtBegin = Request.Form["dateBegin"] != "0001-01-01" ? DateTime.ParseExact(Request.Form["dateBegin"],"yyyy-MM-dd",null) : DateTime.MinValue;
+                DateTime dtEnd = Request.Form["dateEnd"] != "0001-01-01" ? DateTime.ParseExact(Request.Form["dateEnd"], "yyyy-MM-dd", null) : DateTime.MaxValue;
 
-                var filtered = model.Orders.Where(ord => (ord.DocDate > dtBegin) && ord.DocDate < dtEnd);
-                foreach (var pair in filtered) { model.Orders.Add(pair); }
+                List<OrderModel> tempList = new();
+                foreach (var pair in model.Orders.Where(ord => (ord.DocDate > dtBegin) && ord.DocDate < dtEnd)) { tempList.Add(pair); }
+                model.Orders.Clear();
+                model.Orders = tempList;
             }
             return View(model);
         }

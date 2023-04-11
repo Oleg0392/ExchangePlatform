@@ -20,6 +20,7 @@ namespace ExchangePlatform.Models.Implemenation
         public decimal DocSum { get; set; }
         public int DocCount { get; set; }
         public int DocId { get; set; }
+        public int SenderId { get; set; }
 
         // метаданные модели
         protected static Dictionary<string, DbType> ModelInfo = new Dictionary<string, DbType>()
@@ -30,9 +31,10 @@ namespace ExchangePlatform.Models.Implemenation
             { "Buyer", DbType.String },       //3
             { "Reason", DbType.String },      //4
             { "Reciever", DbType.String },    //5
-            { "DocAllSum", DbType.Decimal },     //6
-            { "DocAllCount", DbType.Int32 },     //7
-            { "DocId", DbType.Int32 }         //8
+            { "DocAllSum", DbType.Decimal },  //6
+            { "DocAllCount", DbType.Int32 },   //7
+            { "DocId", DbType.Int32 },         //8
+            { "SenderId", DbType.Int32 }       //9
         };
 
         public List<ItemModel> Items { get; set; }

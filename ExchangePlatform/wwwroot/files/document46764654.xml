@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<document>
+	<docHeader>
+		<docNumber>A0049297</docNumber>
+		<sender>Concelar+ Corp.</sender>
+		<buyer>Ajax Logistics Inc.</buyer>
+		<reason>Contract N.265</reason>
+		<docDate>01.04.2023</docDate>
+	</docHeader>
+	<docLines>
+		<lineItem number="1">
+			<posName>Paper A4 1000pts</posName>
+			<posArt>3342983</posArt>
+			<posCount>24</posCount>
+			<posPrice>124.00</posPrice>
+			<posSum>2976.00</posSum>
+		</lineItem>
+		<lineItem number="2">
+			<posName>Paper A3 500pts</posName>
+			<posArt>887934</posArt>
+			<posCount>12</posCount>
+			<posPrice>85.00</posPrice>
+			<posSum>1020.00</posSum>
+		</lineItem>
+		<lineItem number="3">
+			<posName>Pencil black</posName>
+			<posArt>9093423</posArt>
+			<posCount>55</posCount>
+			<posPrice>10.00</posPrice>
+			<posSum>550.00</posSum>
+		</lineItem>
+		<lineItem number="4">
+			<posName>Folder green solid</posName>
+			<posArt>4578712</posArt>
+			<posCount>30</posCount>
+			<posPrice>225.00</posPrice>
+			<posSum>6750.00</posSum>
+		</lineItem>
+		<lineItem number="5">
+			<posName>Notebook mini black</posName>
+			<posArt>6823298</posArt>
+			<posCount>60</posCount>
+			<posPrice>45.00</posPrice>
+			<posSum>2700.00</posSum>
+		</lineItem>
+	</docLines>
+	<docFooter>
+		<summary>
+			<sumCount>181</sumCount>
+			<sumSum>13996.00</sumSum>
+		</summary>
+		<reciever>Ajax Inc.</reciever>
+		<application></application>
+	</docFooter>
+</document>
