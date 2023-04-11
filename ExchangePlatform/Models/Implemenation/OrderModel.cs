@@ -79,15 +79,7 @@ namespace ExchangePlatform.Models.Implemenation
 
         public OrderModel(object[] queryResult)
         {
-            DocNumber = queryResult[0].ToString();
-            DocDate = Convert.ToDateTime(queryResult[1]);
-            Sender = queryResult[2].ToString();
-            Buyer = queryResult[3].ToString();
-            Reason = queryResult[4].ToString();
-            Reciever = queryResult[5].ToString();
-            DocSum = Convert.ToDecimal(queryResult[6].ToString());
-            DocCount = Convert.ToInt32(queryResult[7].ToString());
-            DocId = Convert.ToInt32(queryResult[8].ToString());
+            LoadOrderModel(queryResult);
         }
 
         public OrderModel()

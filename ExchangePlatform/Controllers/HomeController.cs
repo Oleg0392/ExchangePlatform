@@ -73,7 +73,10 @@ namespace ExchangePlatform.Controllers
             for (int i = 0; i < orders.GetLength(0); i++)
             {
                 object[] temp = new object[orders.GetLength(1)];
-                for (int j = 0; j < temp.Length; j++)  temp[j] = orders[i,j];
+                for (int j = 0; j < temp.Length; j++)
+                {
+                    temp[j] = orders[i, j];
+                }
                 tableModel.Orders.Add(new OrderModel(temp));
             }
 
@@ -83,7 +86,10 @@ namespace ExchangePlatform.Controllers
             for (int i = 0; i < providers.GetLength(0); i++)
             {
                 object[] temp = new object[providers.GetLength(1)];
-                for (int j = 0; j < temp.Length; j++) temp[j] = providers[i,j];
+                for (int j = 0; j < temp.Length; j++)
+                {
+                    temp[j] = providers[i, j];                   
+                }
                 tableModel.Providers.Add(new ProviderModel(temp));
             }
 
@@ -97,9 +103,9 @@ namespace ExchangePlatform.Controllers
             if (Request.Form == null) return View(model);
             if (Request.Form.ContainsKey("provider"))
             {
-                string provider = Request.Form["provider"];
+                int provider = Convert.ToInt32(Request.Form["provider"]);
                 List<OrderModel> tempList = new();
-                foreach (var pair in model.Orders.Where(ord => ord.Sender == provider)) { tempList.Add(pair); }
+                foreach (var pair in model.Orders.Where(ord => ord.SenderId == provider)) { tempList.Add(pair); }
                 model.Orders.Clear();
                 model.Orders = tempList;
             }
@@ -112,6 +118,23 @@ namespace ExchangePlatform.Controllers
                 foreach (var pair in model.Orders.Where(ord => (ord.DocDate > dtBegin) && ord.DocDate < dtEnd)) { tempList.Add(pair); }
                 model.Orders.Clear();
                 model.Orders = tempList;
+            }
+            if (model.Providers == null)
+            {
+                int i = 0;
+                foreach (var keyValue in Request.Form.Keys)
+                {
+                    if (keyValue.Contains("ProviderId"))
+                    {
+                        model.Providers.Add(new());
+                        model.Providers[i].ProviderId = Convert.ToInt32(Request.Form[keyValue]);
+                    }
+                    if (keyValue.Contains("ProviderName"))
+                    {
+                        model.Providers[i].ProviderName = Request.Form[keyValue];
+                        i++;
+                    }
+                }
             }
             return View(model);
         }
