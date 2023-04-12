@@ -1,6 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using ExchangePlatform.Models.Implemenation;
+using System.Collections.Generic;
 
-namespace ExchangePlatform.Models.Implemenation
+namespace ExchangePlatform.ViewModels
 {
     public class OrdersTableModel
     {

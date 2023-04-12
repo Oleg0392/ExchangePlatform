@@ -25,8 +25,8 @@ namespace ExchangePlatform.DataProviders.Implenetation
         {
             int queryResult = 0;
             
-            SqlConnection sqlConnection = new SqlConnection(configuration.GetConnectionString("DefaultConnection"));  //WorkMachineDb
-            //SqlConnection sqlConnection = new SqlConnection(configuration.GetConnectionString("WorkMachineDb"));
+            //SqlConnection sqlConnection = new SqlConnection(configuration.GetConnectionString("DefaultConnection"));  //WorkMachineDb
+            SqlConnection sqlConnection = new SqlConnection(configuration.GetConnectionString("WorkMachineDb"));
             command.Connection = sqlConnection;
             sqlConnection.Open();
             using(sqlConnection)
@@ -40,8 +40,8 @@ namespace ExchangePlatform.DataProviders.Implenetation
         public void ExecuteQuery(SqlCommand command)
         {
             ClearResultFields();
-            SqlConnection sqlConnection = new SqlConnection(configuration.GetConnectionString("DefaultConnection"));
-            //SqlConnection sqlConnection = new SqlConnection(configuration.GetConnectionString("WorkMachineDb"));
+            //SqlConnection sqlConnection = new SqlConnection(configuration.GetConnectionString("DefaultConnection"));
+            SqlConnection sqlConnection = new SqlConnection(configuration.GetConnectionString("WorkMachineDb"));
             command.Connection = sqlConnection;
             List<object[]> listData = new List<object[]>();            
             int VisibleFieldCount = 0;

@@ -1,20 +1,32 @@
 ﻿@{
 	Layout = "~/Views/Shared/_Layout.cshtml";
 }
-@model ExchangePlatform.Models.Implemenation.OrderModel
+@model ExchangePlatform.ViewModels.EditOrderModel
 
 <form method="post" action="/Home/CreateOrder">
     <div class="second">
         <p><b>New Order</b></p>
         <br>
 
-        <p>Номер заказа: <input type="text" name="DocNumber" value="@Model.DocNumber"/></p>
-        <p>Дата заказа: <input type="date" name="DocDate" value="@Model.DocDate" /></p>
+        <p>Номер заказа: <input type="text" name="Target.DocNumber" value="@Model.Target.DocNumber"/></p>
+        <p>Дата заказа: <input type="date" name="Target.DocDate" value="@Model.Target.DocDate" /></p>
         <br>
-        <p>Отправитель: <input type="text" name="Sender" value="@Model.Sender" /></p>
-        <p>Покупатель: <input type="text" name="Buyer" value="@Model.Buyer" /></p>
-        <p>Грузополучатель: <input type="text" name="Reciever" value="@Model.Reciever" /></p>
-        <p>Онование: <input type="text" name="Reason" value="@Model.Reason" /></p>
+        <p>Отправитель: 
+        <select name="Target.SenderId">
+                @for (int i=0; i < Model.AllProviders.Count; i++)
+                {
+        <option name="AllProviders[@i].ProviderId" value="@Model.AllProviders[i].ProviderId">@Model.AllProviders[i].ProviderName</option>            
+                }          
+        </select>    
+        </p>
+        @for (int i = 0; i < Model.AllProviders.Count; i++)
+        {
+            <input type="hidden" name="AllProviders[@i].ProviderName" value="@Model.AllProviders[i].ProviderName" />
+            <input type="hidden" name="AllProviders[@i].ProviderId" value="@Model.AllProviders[i].ProviderId" />
+        }
+        <p>Покупатель: <input type="text" name="Target.Buyer" value="@Model.Target.Buyer" /></p>
+        <p>Грузополучатель: <input type="text" name="Target.Reciever" value="@Model.Target.Reciever" /></p>
+        <p>Онование: <input type="text" name="Target.Reason" value="@Model.Target.Reason" /></p>
         <br>
 
     </div>

@@ -1,6 +1,7 @@
 ﻿using Microsoft.Data.SqlClient;
 using System;
 using ExchangePlatform.Models.Interfaces;
+using System.Data;
 
 namespace ExchangePlatform.Models.Implemenation
 {
@@ -21,7 +22,15 @@ namespace ExchangePlatform.Models.Implemenation
 
         public SqlCommand GetSelectCommand(int id = 0)
         {
-            return null;
+            string query = "SELECT ProviderName FROM Providers WHERE ProviderId = @ProviderId";
+            SqlCommand command = new SqlCommand(query);
+            command.Parameters.Add(new SqlParameter()
+            {
+                ParameterName = "@ProviderId",
+                DbType = DbType.Int32,
+                Value = id
+            });
+            return command;
         }
 
         public SqlCommand GetUpdateCommand(int Id, object NewValue)

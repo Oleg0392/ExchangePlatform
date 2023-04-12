@@ -89,8 +89,8 @@ namespace ExchangePlatform.Models.Implemenation
 
         public SqlCommand GetInsertCommand(int Id = 0)
         {
-            string query = "INSERT INTO Orders(DocNumber, DocDate, Buyer, Reciever, Sender, Reason, DocAllSum, DocAllCount) ";
-            query += "VALUES (@DocNum, @DocDate, @Buyer, @Reciever, @Sender, @Reason, @DocSum, @DocCount)";
+            string query = "INSERT INTO Orders(DocNumber, DocDate, Buyer, Reciever, Sender, Reason, DocAllSum, DocAllCount, SenderId) ";
+            query += "VALUES (@DocNum, @DocDate, @Buyer, @Reciever, @Sender, @Reason, @DocSum, @DocCount, @SenderId)";
             SqlCommand command = new SqlCommand(query);
 
             command.Parameters.Add(new SqlParameter() { ParameterName = "@DocNum", DbType = ModelInfo["DocNumber"], Value = DocNumber });
@@ -101,13 +101,13 @@ namespace ExchangePlatform.Models.Implemenation
             command.Parameters.Add(new SqlParameter() { ParameterName = "@Reason", DbType = ModelInfo["Reason"], Value = Reason });
             command.Parameters.Add(new SqlParameter() { ParameterName = "@DocSum", DbType = ModelInfo["DocAllSum"], Value = DocSum });
             command.Parameters.Add(new SqlParameter() { ParameterName = "@DocCount", DbType = ModelInfo["DocAllCount"], Value = DocCount });
-
+            command.Parameters.Add(new SqlParameter() { ParameterName = "@SenderId", DbType = ModelInfo["SenderId"], Value = SenderId });
             return command;
         }
 
         public SqlCommand GetSelectCommand(int docId = 0)
         {
-            string query = "SELECT DocNumber, DocDate, Buyer, Reciever, Sender, Reason, DocAllSum, DocAllCount, DocId ";
+            string query = "SELECT DocNumber, DocDate, Buyer, Reciever, Sender, Reason, DocAllSum, DocAllCount, DocId, SenderId ";
             query += "FROM Orders WHERE DocId = @DocId";
 
             SqlCommand command = new SqlCommand(query);
@@ -156,7 +156,7 @@ namespace ExchangePlatform.Models.Implemenation
 
         public static SqlCommand GetSelectAllCommand()
         {
-            string query = "SELECT DocNumber, DocDate, Buyer, Reciever, Sender, Reason, DocAllSum, DocAllCount, DocId FROM Orders";
+            string query = "SELECT DocNumber, DocDate, Buyer, Reciever, Sender, Reason, DocAllSum, DocAllCount, DocId, SenderId FROM Orders";
             return new SqlCommand(query);
         }
 
@@ -171,6 +171,7 @@ namespace ExchangePlatform.Models.Implemenation
             DocSum = Convert.ToDecimal(QueryResult[6].ToString());
             DocCount = Convert.ToInt32(QueryResult[7].ToString());
             DocId = Convert.ToInt32(QueryResult[8].ToString());
+            SenderId = Convert.ToInt32(QueryResult[9].ToString());
         }
 
         // массив из 0 и 1, если нет различия в значениях то 0, иначе 1
@@ -191,7 +192,7 @@ namespace ExchangePlatform.Models.Implemenation
 
         public object[] ToArray()
         {
-            object[] array = new object[9];
+            object[] array = new object[10];
             array[0] = DocNumber;
             array[1] = DocDate;
             array[2] = Sender;
@@ -201,6 +202,7 @@ namespace ExchangePlatform.Models.Implemenation
             array[6] = DocSum;
             array[7] = DocCount;
             array[8] = DocId;
+            array[9] = SenderId;
             return array;
         }
 
