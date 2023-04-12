@@ -1,34 +1,41 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <document>
   <docHeader>
-    <docNumber>T0009875</docNumber>
-    <sender>SteelTech Inc.</sender>
+    <docNumber>W0045297</docNumber>
+    <sender>Ajax Inc.</sender>
     <buyer>Warner Bros. Inc.</buyer>
-    <reason>Contract No.245</reason>
-    <docDate>07.04.2023</docDate>
+    <reason>Contract N.786</reason>
+    <docDate>31.03.2023</docDate>
   </docHeader>
   <docLines>
     <lineItem number="1">
-      <posName>Ladder 4 steps</posName>
-      <posArt>342343</posArt>
-      <posCount>3</posCount>
-      <posPrice>3500.00</posPrice>
-      <posSum>10500.00</posSum>
+      <posName>Pencil dark blue</posName>
+      <posArt>3435345</posArt>
+      <posCount>80</posCount>
+      <posPrice>45.00</posPrice>
+      <posSum>3600.00</posSum>
     </lineItem>
     <lineItem number="2">
-      <posName>Doors Metal Grey 2050x75</posName>
-      <posArt>768766</posArt>
-      <posCount>2</posCount>
-      <posPrice>7800.00</posPrice>
-      <posSum>15600.00</posSum>
+      <posName>Canvas solid yellow-white</posName>
+      <posArt>90803984</posArt>
+      <posCount>35</posCount>
+      <posPrice>260.00</posPrice>
+      <posSum>9100.00</posSum>
+    </lineItem>
+    <lineItem number="3">
+      <posName>Paper A2 200 pts</posName>
+      <posArt>673432786</posArt>
+      <posCount>10</posCount>
+      <posPrice>347.00</posPrice>
+      <posSum>3470.00</posSum>
     </lineItem>
   </docLines>
   <docFooter>
     <summary>
-      <sumCount>5</sumCount>
-      <sumSum>26100.00</sumSum>
+      <sumCount>125</sumCount>
+      <sumSum>16170.00</sumSum>
     </summary>
-    <reciever>Warner Bros. Inc. (main)</reciever>
+    <reciever>Warner Bros. Inc.</reciever>
     <application />
   </docFooter>
 </document>
