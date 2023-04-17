@@ -31,26 +31,39 @@
 				</td>
 				<td class="items">
 					<div id="content">
-					<form method="post" action="/Home/Create">
-						<div class="second">
-							<p><b>New Order</b></p>
-							<br>
-							
-							<p>Номер заказа: <input type="text" name="DocNumber" /></p>
-							<p>Дата заказа: <input type="date" name="DocNumber" /></p>
-							<br>
-							<p>Отправитель: <input type="text" name="DocNumber" /></p>
-							<p>Покупатель: <input type="text" name="DocNumber" /></p>
-							<p>Грузополучатель: <input type="text" name="DocNumber" /></p>
-							<p>Онование: <input type="text" name="DocNumber" /></p>
-							<br>
-							
-						</div>
-						<br><br>
-						<button>Создать</button>
+						<form method="post" action="/Home/Index">
+							<div class="first">
+								<p><center><b>Authorization</b></center></p>
+								<br>								
+								<p><center>User Name: <input type="text" /></center></p>
+								<p><center>Email: <input type="text" /></center></p>
+								<p><center>Password: <input type="password"  /></center></p>
+								<p><center>Confirm password: <input type="password" /></center></p>
+								<br>							
+							</div>
+							<br><br>
+							<center><button>Confirm authorization</button></center>
 						</form>
 						
-						<p><b>Orders List</b></p>
+						<!--form method="post" action="/Home/Create">
+							<div class="second">
+								<p><b>New Order</b></p>
+								<br>
+							
+								<p>Номер заказа: <input type="text" name="DocNumber" /></p>
+								<p>Дата заказа: <input type="date" name="DocNumber" /></p>
+								<br>
+								<p>Отправитель: <input type="text" name="DocNumber" /></p>
+								<p>Покупатель: <input type="text" name="DocNumber" /></p>
+								<p>Грузополучатель: <input type="text" name="DocNumber" /></p>
+								<p>Онование: <input type="text" name="DocNumber" /></p>
+								<br>							
+							</div>
+							<br><br>
+							<button>Создать</button>
+						</form-->
+						
+						<!--p><b>Orders List</b></p>
 						<br>
 						<form method="post" action="/Home/OrderList">
 							<p>       Filter by provider:
@@ -103,10 +116,10 @@
 							<div class="second">
 								DocNumber | DocDate | Sender | Reciever | DocSum
 							</div>
-						</a>
+						</a-->
 						
 						<br><br><br>
-						<div class="second">
+						<!--div class="second">
 							<p>Номер заказа: DocNumber</p>
 							<p>Дата заказа: 01/01/2022</p>
 							<br>
@@ -127,7 +140,7 @@
 							<p>Общяя сумма: </p>
 							<p>Общее количество: </p>
 							<br>
-						</div>
+						</div-->
 						
 					</div>
 				</td>

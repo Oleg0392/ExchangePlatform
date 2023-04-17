@@ -20,9 +20,16 @@ namespace ExchangePlatform.Controllers
         {
             queryManager = manager;
         }
+        [HttpGet]
         public IActionResult Index()
         {
             ViewBag.Title = "Home Page";
+            if (HttpContext.Session.GetString("UserName") == null)
+            {
+                HttpContext.Session.SetString("UserName", "admin");
+                HttpContext.Session.SetInt32("Pass", 1234);
+            }
+            ViewBag.Meaage = HttpContext.Session.GetString("UserName");
             return View();
         }       
 

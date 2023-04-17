@@ -38,10 +38,8 @@ namespace ExchangePlatform.Models.Implemenation
             throw new NotImplementedException();
         }
 
-        public static SqlCommand GetSelectAllCommand()
-        {
-            return new SqlCommand("SELECT ProviderId, ProviderName FROM Providers");           
-        }
+        public static SqlCommand GetSelectAllCommand() => new ("SELECT ProviderId, ProviderName FROM Providers");           
+        
 
         public ProviderModel() { }
 

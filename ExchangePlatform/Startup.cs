@@ -17,7 +17,13 @@ namespace ExchangePlatform
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
-            
+            services.AddSession(options =>
+            {
+                options.Cookie.Name = ".ExchangePlatform.Cookie";
+                options.IdleTimeout = TimeSpan.FromSeconds(60);
+                //options.Cookie.HttpOnly = true;
+                options.Cookie.IsEssential = true;
+            });
             services.AddScoped<DataProviders.Intrefaces.IQueryManager, DataProviders.Implenetation.QueryManager>();
         }
 
@@ -31,6 +37,7 @@ namespace ExchangePlatform
             
             app.UseStaticFiles();
             app.UseRouting();
+            app.UseSession();
 
             app.UseEndpoints(endpoint =>
             {
